@@ -1,4 +1,4 @@
-package core.entity.party;
+package core.model.party;
 
 public class Customer {
 }

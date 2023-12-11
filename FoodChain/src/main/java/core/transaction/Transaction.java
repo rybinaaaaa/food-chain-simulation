@@ -1,6 +1,6 @@
 package core.transaction;
 
-import core.entity.party.Party;
+import core.model.party.Party;
 import core.operation.Operation;
 
 public class Transaction {

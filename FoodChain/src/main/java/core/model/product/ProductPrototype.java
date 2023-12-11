@@ -1,4 +1,8 @@
-package core.entity.product;
+package core.model.product;
+
+import core.model.product.state.ProductState;
+import core.model.product.state.Ready;
+import core.model.product.state.Received;
 
 import java.util.List;
 
@@ -17,6 +21,8 @@ public abstract class ProductPrototype {
 
     private AmountUnit unit;
 
+    private ProductState state;
+
     public ProductPrototype(){}
 
     public ProductPrototype(ProductPrototype prototype) {
@@ -27,7 +33,16 @@ public abstract class ProductPrototype {
         prototype.amount = amount;
         prototype.certificates = certificates;
         prototype.unit = unit;
+        prototype.state = new Received(this);
     }
 
     public abstract ProductPrototype clone();
+
+    public ProductState getState() {
+        return state;
+    }
+
+    public void setState(ProductState state) {
+        this.state = state;
+    }
 }

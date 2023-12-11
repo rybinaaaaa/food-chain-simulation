@@ -1,4 +1,4 @@
-package core.entity.product;
+package core.model.product;
 
 public class Carrot extends ProductPrototype{
 

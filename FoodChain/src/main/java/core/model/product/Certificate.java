@@ -1,4 +1,4 @@
-package core.entity.product;
+package core.model.product;
 
 import java.time.LocalDate;
 

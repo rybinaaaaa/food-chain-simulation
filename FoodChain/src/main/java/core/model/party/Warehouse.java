@@ -1,4 +1,9 @@
 package core.model.party;
 
-public class Warehouse {
+import core.model.product.ProductPrototype;
+
+public class Warehouse extends  Party{
+    public Warehouse(Long id, String firstName, String lastName) {
+        super(id, firstName, lastName);
+    }
 }

@@ -6,8 +6,14 @@ public class Carrot extends ProductPrototype{
         super(prototype);
     }
 
+    public  Carrot (Long id, Double weight, String name){
+        super(id, weight, name);
+    }
+
     @Override
     public ProductPrototype clone() {
         return new Carrot(this);
     }
+
+
 }

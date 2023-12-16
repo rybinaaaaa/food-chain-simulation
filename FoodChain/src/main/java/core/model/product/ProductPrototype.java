@@ -36,6 +36,12 @@ public abstract class ProductPrototype {
         prototype.state = new Received(this);
     }
 
+    public ProductPrototype(Long id, Double weight, String name){
+        this.id = id;
+        this.weight = weight;
+        this.name = name;
+    }
+
     public abstract ProductPrototype clone();
 
     public ProductState getState() {

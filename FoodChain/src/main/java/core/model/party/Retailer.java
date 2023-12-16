@@ -1,4 +1,9 @@
 package core.model.party;
 
-public class Retailer {
+import core.model.product.ProductPrototype;
+
+public class Retailer extends  Party{
+    public Retailer(Long id, String firstName, String lastName, ProductPrototype product) {
+        super(id, firstName, lastName, product);
+    }
 }

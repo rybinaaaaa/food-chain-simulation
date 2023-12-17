@@ -1,10 +1,9 @@
 package core.channel;
 
 import core.model.party.Party;
-import core.model.product.ProductPrototype;
+import core.model.product.Product;
 import core.operation.Operation;
 import core.transaction.Transaction;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +45,7 @@ public class Channel {
             newPartyList.add(party);
             subscribers.put(operation, newPartyList);
         }
-        logger.info("Party " + party.getFullName() + " subscribed on " + operation.getName() + " operation." );
+        logger.info("Party " + party.getFullName() + " subscribed on " + operation.getName() + " operation.");
     }
 
     public void unsubscribe(Party party, Operation operation) {
@@ -60,41 +59,41 @@ public class Channel {
         } else {
             // log - no such subscription
         }
-        logger.info("Party " + party.getFullName() + " unsubscribed from " + operation.getName() + " operation." );
+        logger.info("Party " + party.getFullName() + " unsubscribed from " + operation.getName() + " operation.");
 
     }
 
-    public void publishPartyEvent(Operation operation, ProductPrototype product, Party seller){
+    public void publishPartyEvent(Operation operation, Product product, Party seller) {
         logger.info("Channel of type " + getType() + " is notifying subscribers about the " + product.getName());
 
         Optional<Party> customer = Optional.ofNullable(subscribers.entrySet().stream()
-               .filter(entry -> entry.getKey().equals(operation))
-               .flatMap(entry -> entry.getValue().stream())
-               .filter(p -> p.update(operation, product, this)) // Filter parties where update returns true
-               .findFirst() // Find the first party
-               .orElse(null));
-       if(customer.isPresent()){
+                .filter(entry -> entry.getKey().equals(operation))
+                .flatMap(entry -> entry.getValue().stream())
+                .filter(p -> p.update(operation, product, this)) // Filter parties where update returns true
+                .findFirst() // Find the first party
+                .orElse(null));
+        if (customer.isPresent()) {
             logger.info("Party " + customer.get().getFullName() + " accepts the " + product.getName());
             createTransaction(seller, operation);
             customer.get().setProduct(product);
             seller.setProduct(null);
-           logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
-       }
+            logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
+        }
     }
 
-    private void createTransaction(Party seller, Operation operation){
+    private void createTransaction(Party seller, Operation operation) {
         Transaction transaction = new Transaction(generateTransactionId(), seller, operation);
         try {
-            transaction.setPreviousTransaction(transactions.getLast());
-        } catch (NoSuchElementException e){
+            transaction.setPreviousTransaction(transactions.get(transactions.size() - 1));
+        } catch (NoSuchElementException e) {
             transaction.setPreviousTransaction(null);
         }
         transactions.add(transaction);
-        logger.info("Transaction "+ transaction.getId() + " has been created");
+        logger.info("Transaction " + transaction.getId() + " has been created");
 
     }
 
-    private Long generateTransactionId(){
+    private Long generateTransactionId() {
         return transactionIdCounter.getAndIncrement();
     }
 
@@ -121,8 +120,4 @@ public class Channel {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-
-
-
-
 }

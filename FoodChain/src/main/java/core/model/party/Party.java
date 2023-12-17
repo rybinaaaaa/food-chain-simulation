@@ -1,6 +1,6 @@
 package core.model.party;
 
-import core.model.product.ProductPrototype;
+import core.model.product.Product;
 import core.operation.Operation;
 import core.transaction.Account;
 import core.channel.Channel;
@@ -21,7 +21,7 @@ public abstract class Party {
 
     private List<Channel> channels = new ArrayList<>();
 
-    private ProductPrototype product;
+    private Product product;
 
     private Operation operation;
 
@@ -42,7 +42,7 @@ public abstract class Party {
             channel.publishPartyEvent(operation, product, party);
     }
 
-    public Boolean update(Operation o, ProductPrototype p, Channel c){
+    public Boolean update(Operation o, Product p, Channel c){
 //        strategy.execute();
 //        c.createTransaction();
         return true;
@@ -93,11 +93,11 @@ public abstract class Party {
         this.channels.add(channel);
     }
 
-    public ProductPrototype getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(ProductPrototype product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

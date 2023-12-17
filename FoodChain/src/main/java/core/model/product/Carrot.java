@@ -1,19 +1,13 @@
 package core.model.product;
 
-public class Carrot extends ProductPrototype{
-
-    public Carrot(ProductPrototype prototype) {
-        super(prototype);
-    }
+public class Carrot extends Product {
 
     public  Carrot (Long id, Double weight, String name){
         super(id, weight, name);
     }
 
     @Override
-    public ProductPrototype clone() {
-        return new Carrot(this);
+    public void clone(Product product) {
+        super.clone(product);
     }
-
-
 }

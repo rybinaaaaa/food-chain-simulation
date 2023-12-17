@@ -1,12 +1,10 @@
 package core.model.product;
 
-import core.model.product.state.ProductState;
-import core.model.product.state.Ready;
-import core.model.product.state.Received;
+import patterns.prototype.Prototype;
 
 import java.util.List;
 
-public abstract class ProductPrototype {
+public abstract class Product implements Prototype<Product> {
     private Long id;
 
     private Double weight;
@@ -23,9 +21,10 @@ public abstract class ProductPrototype {
 
     private ProductState state;
 
-    public ProductPrototype(){}
+    public Product(){}
 
-    public ProductPrototype(ProductPrototype prototype) {
+    @Override
+    public void clone(Product prototype) {
         prototype.id = id;
         prototype.weight = weight;
         prototype.name = name;
@@ -33,16 +32,14 @@ public abstract class ProductPrototype {
         prototype.amount = amount;
         prototype.certificates = certificates;
         prototype.unit = unit;
-        prototype.state = new Received(this);
+        prototype.state = ProductState.RECEIVED;
     }
 
-    public ProductPrototype(Long id, Double weight, String name){
+    public Product(Long id, Double weight, String name){
         this.id = id;
         this.weight = weight;
         this.name = name;
     }
-
-    public abstract ProductPrototype clone();
 
     public ProductState getState() {
         return state;

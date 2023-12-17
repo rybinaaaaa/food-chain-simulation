@@ -51,4 +51,8 @@ public abstract class ProductPrototype {
     public void setState(ProductState state) {
         this.state = state;
     }
+
+    public String getName() {
+        return name;
+    }
 }

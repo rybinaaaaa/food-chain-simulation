@@ -1,47 +1,101 @@
 package core.channel;
 
 import core.model.party.Party;
+import core.model.product.ProductPrototype;
 import core.operation.Operation;
 import core.transaction.Transaction;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Channel {
 
     private Long id;
 
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
-    private Party seller;
-
-    private Party customer;
+//    private Party seller;
+//
+//    private Party customer;
 
     private ChannelType type;
 
-//    private Map<Operation, Party> subscribers = new HashMap<>();
+    private Map<Operation, List<Party>> subscribers = new HashMap<>();
 
-    private List<Party> subscribers = new ArrayList<>();
+//    private List<Party> subscribers = new ArrayList<>();
 
-    public void subscribe(Party party) {
-        subscribers.add(party);
-    }
+    private AtomicLong transactionIdCounter = new AtomicLong(System.currentTimeMillis());
 
-    public void unsubscribe(Party party) {
-        subscribers.remove(party);
-    }
-
-//    public void notifyParties(){
-//        for (Party subscriber: subscribers) {
-//            subscriber.update();
-//        }
-//    }
+    private static final Logger logger = LogManager.getLogger(Channel.class);
 
 
     public Channel(ChannelType type) {
         this.type = type;
+    }
+
+
+    public void subscribe(Party party, Operation operation) {
+        if (subscribers.containsKey(operation)) {
+            List<Party> partyList = subscribers.get(operation);
+            partyList.add(party);
+        } else {
+            List<Party> newPartyList = new ArrayList<>();
+            newPartyList.add(party);
+            subscribers.put(operation, newPartyList);
+        }
+        logger.info("Party " + party.getFullName() + " subscribed on " + operation.getName() + " operation." );
+    }
+
+    public void unsubscribe(Party party, Operation operation) {
+        if (subscribers.containsKey(operation)) {
+            List<Party> partyList = subscribers.get(operation);
+            partyList.remove(party);
+
+            if (partyList.isEmpty()) {
+                subscribers.remove(operation);
+            }
+        } else {
+            // log - no such subscription
+        }
+        logger.info("Party " + party.getFullName() + " unsubscribed from " + operation.getName() + " operation." );
+
+    }
+
+    public void publishPartyEvent(Operation operation, ProductPrototype product, Party seller){
+        logger.info("Channel of type " + getType() + " is notifying subscribers about the " + product.getName());
+
+        Optional<Party> customer = Optional.ofNullable(subscribers.entrySet().stream()
+               .filter(entry -> entry.getKey().equals(operation))
+               .flatMap(entry -> entry.getValue().stream())
+               .filter(p -> p.update(operation, product, this)) // Filter parties where update returns true
+               .findFirst() // Find the first party
+               .orElse(null));
+       if(customer.isPresent()){
+            logger.info("Party " + customer.get().getFullName() + " accepts the " + product.getName());
+            createTransaction(seller, operation);
+            customer.get().setProduct(product);
+            seller.setProduct(null);
+           logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
+       }
+    }
+
+    private void createTransaction(Party seller, Operation operation){
+        Transaction transaction = new Transaction(generateTransactionId(), seller, operation);
+        try {
+            transaction.setPreviousTransaction(transactions.getLast());
+        } catch (NoSuchElementException e){
+            transaction.setPreviousTransaction(null);
+        }
+        transactions.add(transaction);
+        logger.info("Transaction "+ transaction.getId() + " has been created");
+
+    }
+
+    private Long generateTransactionId(){
+        return transactionIdCounter.getAndIncrement();
     }
 
     public ChannelType getType() {
@@ -68,27 +122,7 @@ public class Channel {
         this.transactions = transactions;
     }
 
-    public Party getSeller() {
-        return seller;
-    }
 
-    public void setSeller(Party seller) {
-        this.seller = seller;
-    }
 
-    public Party getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Party customer) {
-        this.customer = customer;
-    }
-
-    public List<Party> getSubscribers() {
-        return subscribers;
-    }
-
-    public void setSubscribers(List<Party> subscribers) {
-        this.subscribers = subscribers;
-    }
 }

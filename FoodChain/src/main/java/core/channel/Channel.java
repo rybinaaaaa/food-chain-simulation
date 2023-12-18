@@ -85,12 +85,11 @@ public class Channel {
         Transaction transaction = new Transaction(generateTransactionId(), seller, operation);
         try {
             transaction.setPreviousTransaction(transactions.get(transactions.size() - 1));
-        } catch (NoSuchElementException e) {
+        } catch (IndexOutOfBoundsException e) {
             transaction.setPreviousTransaction(null);
         }
         transactions.add(transaction);
         logger.info("Transaction " + transaction.getId() + " has been created");
-
     }
 
     private Long generateTransactionId() {

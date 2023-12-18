@@ -27,7 +27,5 @@ public class Application {
         meatChannel.subscribe(processor2, growing);
 
         farmer.publishEvent(farmer);
-
-
     }
 }

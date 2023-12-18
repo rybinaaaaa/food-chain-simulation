@@ -46,7 +46,6 @@ public abstract class Party {
 //        strategy.execute();
 //        c.createTransaction();
         return true;
-
     }
 
     public  String getFullName(){

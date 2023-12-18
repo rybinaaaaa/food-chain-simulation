@@ -5,6 +5,8 @@ package simulation;
 import core.channel.Channel;
 import core.channel.ChannelType;
 import core.model.party.Farmer;
+import core.model.party.Party;
+import core.model.party.PartyFactory;
 import core.model.party.Processor;
 import core.model.product.Carrot;
 import core.operation.Growing;
@@ -16,7 +18,7 @@ public class Application {
         Farmer farmer = new Farmer(1L, "Dan", "Samon");
         farmer.setProduct(carrot);
 
-        Processor processor1 = new Processor(2L, "Manuele", "Thaleman");
+        Party processor1 = PartyFactory.createParty(PartyFactory.PartyType.PROCESSOR,2L, "Manuele", "Thaleman");
         Processor processor2 = new Processor(3L, "Nick", "Fisherman");
 
         Channel meatChannel = new Channel(ChannelType.MEAT);

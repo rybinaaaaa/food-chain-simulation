@@ -44,7 +44,6 @@ public abstract class Party {
 
     public Boolean update(Operation o, Product p, Channel c){
 //        strategy.execute();
-//        c.createTransaction();
         return true;
     }
 

@@ -3,6 +3,7 @@ package core.channel;
 import core.model.party.Party;
 import core.model.product.Product;
 import core.operation.Operation;
+import core.transaction.Account;
 import core.transaction.Transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,15 +17,9 @@ public class Channel {
 
     private List<Transaction> transactions = new ArrayList<>();
 
-//    private Party seller;
-//
-//    private Party customer;
-
     private ChannelType type;
 
     private Map<Operation, List<Party>> subscribers = new HashMap<>();
-
-//    private List<Party> subscribers = new ArrayList<>();
 
     private AtomicLong transactionIdCounter = new AtomicLong(System.currentTimeMillis());
 
@@ -74,6 +69,7 @@ public class Channel {
                 .orElse(null));
         if (customer.isPresent()) {
             logger.info("Party " + customer.get().getFullName() + " accepts the " + product.getName());
+            processPayment(seller, customer.get());
             createTransaction(seller, operation);
             customer.get().setProduct(product);
             seller.setProduct(null);
@@ -90,6 +86,17 @@ public class Channel {
         }
         transactions.add(transaction);
         logger.info("Transaction " + transaction.getId() + " has been created");
+    }
+
+    private void processPayment(Party seller, Party customer){
+        Double price = seller.getOperation().getPrice();
+        Account sellerAccount =  seller.getAccount();
+        sellerAccount.setTotalAmount(sellerAccount.getTotalAmount() + price);
+
+        Account customerAccount =  customer.getAccount();
+        customerAccount.setTotalAmount(customerAccount.getTotalAmount() - price);
+
+        logger.info("Party " + customer.getFullName() + " has paid " + price + " to "  + seller.getFullName());
     }
 
     private Long generateTransactionId() {

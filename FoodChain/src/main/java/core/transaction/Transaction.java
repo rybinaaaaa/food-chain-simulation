@@ -22,19 +22,23 @@ public class Transaction {
 
     private Transaction previousTransaction;
 
+    private PaymentDetails paymentDetails;
+
     private static final Logger logger = LogManager.getLogger(Channel.class);
 
 
-    public Transaction(Long id, Party party, Operation operation) {
+    public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails) {
         this.id = id;
         this.party = party;
         this.operation = operation;
+        this.paymentDetails = paymentDetails;
     }
 
     public String createHash(){
         String dataToHash = previousTransaction.getHash()
                 + Long.toString(id)
                 + party.getFirstName() + party.getLastName()
+                + paymentDetails.getHash()
                 + operation.getName();
         MessageDigest digest = null;
         byte[] bytes = null;

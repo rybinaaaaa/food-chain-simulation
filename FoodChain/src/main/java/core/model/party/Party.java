@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Party {
-    private Long id;
+    final private Long id;
 
-    private String firstName;
+    final private String firstName;
 
-    private String lastName;
+    final private String lastName;
 
     private Account account;
 
-    private List<Channel> channels = new ArrayList<>();
+    final private List<Channel> channels = new ArrayList<>();
 
     private Product product;
 
@@ -27,8 +27,6 @@ public abstract class Party {
 
     private static final Logger logger = LogManager.getLogger(Channel.class);
 
-
-//    private  Strategy strategy;
 
     public Party(Long id, String firstName, String lastName) {
         this.id = id;
@@ -43,7 +41,6 @@ public abstract class Party {
     }
 
     public Boolean update(Operation o, Product p, Channel c){
-//        strategy.execute();
         return true;
     }
 
@@ -55,24 +52,12 @@ public abstract class Party {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Account getAccount() {

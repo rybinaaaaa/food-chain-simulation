@@ -4,6 +4,7 @@ import core.model.party.Party;
 import core.model.product.Product;
 import core.operation.Operation;
 import core.transaction.Account;
+import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,16 +70,18 @@ public class Channel {
                 .orElse(null));
         if (customer.isPresent()) {
             logger.info("Party " + customer.get().getFullName() + " accepts the " + product.getName());
-            processPayment(seller, customer.get());
-            createTransaction(seller, operation);
+
+            PaymentDetails paymentDetails = processPayment(seller, customer.get());
+            createTransaction(seller, operation, paymentDetails);
             customer.get().setProduct(product);
             seller.setProduct(null);
+
             logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
         }
     }
 
-    private void createTransaction(Party seller, Operation operation) {
-        Transaction transaction = new Transaction(generateTransactionId(), seller, operation);
+    private void createTransaction(Party seller, Operation operation, PaymentDetails paymentDetails) {
+        Transaction transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails);
         try {
             transaction.setPreviousTransaction(transactions.get(transactions.size() - 1));
         } catch (IndexOutOfBoundsException e) {
@@ -88,15 +91,19 @@ public class Channel {
         logger.info("Transaction " + transaction.getId() + " has been created");
     }
 
-    private void processPayment(Party seller, Party customer){
+    private PaymentDetails processPayment(Party seller, Party customer){
+        //transfer money
         Double price = seller.getOperation().getPrice();
         Account sellerAccount =  seller.getAccount();
         sellerAccount.setTotalAmount(sellerAccount.getTotalAmount() + price);
 
         Account customerAccount =  customer.getAccount();
         customerAccount.setTotalAmount(customerAccount.getTotalAmount() - price);
-
         logger.info("Party " + customer.getFullName() + " has paid " + price + " to "  + seller.getFullName());
+
+
+        //create PaymentDetails
+        return new PaymentDetails(generateTransactionId(), seller.getId(), customer.getId(), price);
     }
 
     private Long generateTransactionId() {

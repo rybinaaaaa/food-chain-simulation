@@ -1,6 +1,7 @@
 package core.model.party;
 
 import core.model.product.Product;
+import core.model.product.state.Received;
 import core.operation.Operation;
 import core.transaction.Account;
 import core.channel.Channel;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Party {
-    final private Long id;
+    final private UserKey key;
 
     final private String firstName;
 
@@ -25,19 +26,25 @@ public abstract class Party {
 
     private Operation operation;
 
-    private static final Logger logger = LogManager.getLogger(Channel.class);
+    protected static final Logger logger = LogManager.getLogger(Channel.class);
 
 
-    public Party(Long id, String firstName, String lastName) {
-        this.id = id;
+    public Party(UserKey key, String firstName, String lastName) {
+        this.key = key;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public void publishEvent(Party party){
+    public void processProduct(Product product){
+        this.setProduct(product);
+        //states to do
+        publishEvent();
+    }
+
+    public void publishEvent(){
         logger.info("Party " + getFullName() + " is sending " + product.getName() + " to the channels" );
         for(Channel channel: channels)
-            channel.publishPartyEvent(operation, product, party);
+            channel.publishPartyEvent(operation, product, this);
     }
 
     public Boolean update(Operation o, Product p, Channel c){
@@ -48,8 +55,8 @@ public abstract class Party {
         return firstName + " " + lastName;
     }
 
-    public Long getId() {
-        return id;
+    public UserKey getKey() {
+        return key;
     }
 
     public String getFirstName() {

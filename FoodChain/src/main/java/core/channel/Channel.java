@@ -20,9 +20,9 @@ public class Channel {
 
     private ChannelType type;
 
-    private Map<Operation, List<Party>> subscribers = new HashMap<>();
+    private final Map<Operation, List<Party>> subscribers = new HashMap<>();
 
-    private AtomicLong transactionIdCounter = new AtomicLong(System.currentTimeMillis());
+    private final AtomicLong transactionIdCounter = new AtomicLong(System.currentTimeMillis());
 
     private static final Logger logger = LogManager.getLogger(Channel.class);
 
@@ -56,7 +56,6 @@ public class Channel {
             // log - no such subscription
         }
         logger.info("Party " + party.getFullName() + " unsubscribed from " + operation.getName() + " operation.");
-
     }
 
     public void publishPartyEvent(Operation operation, Product product, Party seller) {
@@ -69,14 +68,14 @@ public class Channel {
                 .findFirst() // Find the first party
                 .orElse(null));
         if (customer.isPresent()) {
-            logger.info("Party " + customer.get().getFullName() + " accepts the " + product.getName());
+            logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
 
             PaymentDetails paymentDetails = processPayment(seller, customer.get());
             createTransaction(seller, operation, paymentDetails);
-            customer.get().setProduct(product);
-            seller.setProduct(null);
-
             logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
+
+            customer.get().processProduct(product);
+            seller.setProduct(null);
         }
     }
 
@@ -103,7 +102,7 @@ public class Channel {
 
 
         //create PaymentDetails
-        return new PaymentDetails(generateTransactionId(), seller.getId(), customer.getId(), price);
+        return new PaymentDetails(generateTransactionId(), seller.getKey(), customer.getKey(), price);
     }
 
     private Long generateTransactionId() {

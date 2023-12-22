@@ -3,9 +3,9 @@ package core.operation;
 import core.channel.ChannelType;
 
 public abstract class Operation {
-    private Double price;
-    private ChannelType channelType;
-    private String name;
+    private final Double price;
+    private final ChannelType channelType;
+    private final String name;
 
 
     public Operation(Double price, ChannelType channelType, String name) {

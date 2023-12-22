@@ -1,7 +1,7 @@
 package core.model.party;
 
 public class Warehouse extends  Party{
-    public Warehouse(Long id, String firstName, String lastName) {
-        super(id, firstName, lastName);
+    public Warehouse(UserKey key, String firstName, String lastName) {
+        super(key, firstName, lastName);
     }
 }

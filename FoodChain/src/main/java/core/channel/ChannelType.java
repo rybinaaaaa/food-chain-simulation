@@ -1,5 +1,5 @@
 package core.channel;
 
 public enum ChannelType {
-    EXCHANGE, PAYMENT, MEAT
+    EXCHANGE, PAYMENT, MEAT, VEGETABLES
 }

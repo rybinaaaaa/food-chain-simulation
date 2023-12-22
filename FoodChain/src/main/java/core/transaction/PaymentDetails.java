@@ -1,5 +1,7 @@
 package core.transaction;
 
+import core.model.party.UserKey;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,15 +9,15 @@ import java.security.NoSuchAlgorithmException;
 public class PaymentDetails {
     private final Long paymentId;
 
-    private final Long sellerId;
+    private final UserKey sellerId;
 
-    private final Long customerID;
+    private final UserKey customerID;
 
     private final Double amount;
 
     private String hash;
 
-    public PaymentDetails(Long paymentId, Long sellerId, Long customerID, Double amount) {
+    public PaymentDetails(Long paymentId, UserKey sellerId, UserKey customerID, Double amount) {
         this.paymentId = paymentId;
         this.sellerId = sellerId;
         this.customerID = customerID;
@@ -25,8 +27,8 @@ public class PaymentDetails {
     private void generateHash(){
         String dataToHash =
                 Long.toString(paymentId)
-                + Long.toString(sellerId)
-                + Long.toString(customerID)
+                + sellerId.getPublicKey()
+                + customerID.getPublicKey()
                 + Double.toString(amount);
         MessageDigest digest = null;
         byte[] bytes = null;

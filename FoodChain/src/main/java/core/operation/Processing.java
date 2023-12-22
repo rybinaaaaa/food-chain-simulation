@@ -7,7 +7,9 @@ public class Processing extends Operation{
 
     private Float duration;
 
-    public Processing(Double price, ChannelType channelType, String name) {
+    public Processing(Double price, ChannelType channelType, String name, Double temp, Float duration) {
         super(price, channelType, name);
+        this.temperature = temp;
+        this.duration = duration;
     }
 }

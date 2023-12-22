@@ -1,5 +1,6 @@
 package core.model.product;
 
+import core.model.product.state.State;
 import patterns.prototype.Prototype;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public abstract class Product implements Prototype<Product> {
 
     private AmountUnit unit;
 
-    private ProductState state;
+    private State state;
 
     public Product(){}
 
@@ -32,7 +33,7 @@ public abstract class Product implements Prototype<Product> {
         prototype.amount = amount;
         prototype.certificates = certificates;
         prototype.unit = unit;
-        prototype.state = ProductState.RECEIVED;
+//        prototype.state = ProductState.RECEIVED;
     }
 
     public Product(Long id, Double weight, String name){
@@ -41,11 +42,11 @@ public abstract class Product implements Prototype<Product> {
         this.name = name;
     }
 
-    public ProductState getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(ProductState state) {
+    public void setState(State state) {
         this.state = state;
     }
 

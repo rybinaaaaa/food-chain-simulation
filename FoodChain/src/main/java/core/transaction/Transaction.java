@@ -12,17 +12,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Transaction {
-    private Long id;
+    private final Long id;
 
-    private Party party;
+    private final Party party;
 
-    private Operation operation;
+    private final Operation operation;
 
     private String hash;
 
     private Transaction previousTransaction;
 
-    private PaymentDetails paymentDetails;
+    private final PaymentDetails paymentDetails;
 
     private static final Logger logger = LogManager.getLogger(Channel.class);
 

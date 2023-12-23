@@ -50,7 +50,7 @@ public class Application {
         Processing processing = new Processing(50000D, ChannelType.VEGETABLES, "Process carrots", 15D, 2F);
         Storing storing = new Storing(25000D, ChannelType.VEGETABLES, "Store carrots", 5D, 5F, 96D);
         Storing delivering = new Storing(25000D, ChannelType.VEGETABLES, "Deliver carrots", 5D, 5F, 96D);
-        Selling selling = new Selling(10000D, ChannelType.VEGETABLES, "Sell carrots");
+        Selling selling = new Selling(10000D, ChannelType.VEGETABLES, "Sell carrots", 10F);
 
         //set operations
         farmer.setOperation(growing);

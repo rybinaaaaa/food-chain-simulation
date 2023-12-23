@@ -24,8 +24,6 @@ public class Transaction {
 
     private final PaymentDetails paymentDetails;
 
-    private static final Logger logger = LogManager.getLogger(Channel.class);
-
 
     public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails) {
         this.id = id;

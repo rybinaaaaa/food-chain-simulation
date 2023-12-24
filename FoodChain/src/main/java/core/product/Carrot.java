@@ -1,4 +1,4 @@
-package core.model.product;
+package core.product;
 
 public class Carrot extends Product {
 

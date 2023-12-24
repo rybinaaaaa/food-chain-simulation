@@ -1,21 +1,22 @@
-package core.model.product.state;
+package core.product.state;
 
-import core.model.product.Product;
+import core.product.Product;
 
-public class Received extends State{
-    public Received(Product product) {
+public class Processing extends State {
+
+    public Processing(Product product) {
         super(product);
-        this.timeToProcess = 2000;
+        this.timeToProcess = 4000;
     }
 
     @Override
     public void setNextState(){
-        context.setState(new Processing(context));
+        context.setState(new Ready(context));
     }
 
     @Override
     public void process(){
-        logger.info("The product has been received by the party");
+        logger.info("The operation is in process");
         try {
             Thread.sleep(timeToProcess);
         } catch (InterruptedException e) {
@@ -24,5 +25,4 @@ public class Received extends State{
         }
         setNextState();
     }
-
 }

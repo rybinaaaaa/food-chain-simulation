@@ -1,12 +1,8 @@
 package core.transaction;
 
-import core.channel.Channel;
-import core.model.party.Party;
+import core.party.Party;
 import core.operation.Operation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

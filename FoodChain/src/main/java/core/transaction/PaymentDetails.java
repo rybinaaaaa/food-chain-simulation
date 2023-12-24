@@ -1,6 +1,6 @@
 package core.transaction;
 
-import core.model.party.UserKey;
+import core.party.UserKey;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

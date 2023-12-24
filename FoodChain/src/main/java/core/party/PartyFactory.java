@@ -1,4 +1,4 @@
-package core.model.party;
+package core.party;
 
 public class PartyFactory {
     public static enum PartyType {

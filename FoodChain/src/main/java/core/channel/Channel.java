@@ -1,11 +1,13 @@
 package core.channel;
 
-import core.model.party.Party;
-import core.model.product.Product;
+import core.certificate.Certificate;
+import core.party.Party;
+import core.product.Product;
 import core.operation.Operation;
 import core.transaction.Account;
 import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
+import exception.CertificateNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,14 +70,22 @@ public class Channel {
                 .findFirst() // Find the first party
                 .orElse(null));
         if (customer.isPresent()) {
-            logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
+            try {
+                Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
+                logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
 
-            PaymentDetails paymentDetails = processPayment(seller, customer.get());
-            createTransaction(seller, operation, paymentDetails);
-            logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
+                PaymentDetails paymentDetails = processPayment(seller, customer.get());
+                createTransaction(seller, operation, paymentDetails);
+                logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
 
-            customer.get().processProduct(product);
-            seller.setProduct(null);
+                customer.get().processProduct(product);
+                seller.setProduct(null);
+                certificate.setActive(false);
+
+                logger.info("The operation with " + seller.getFullName() + " and product " + product.getName() + "has completed successfully");
+            } catch (CertificateNotFoundException e) {
+                logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
+            }
         }
     }
 

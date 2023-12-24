@@ -1,4 +1,4 @@
-package core.model.party;
+package core.party;
 
 public class Retailer extends  Party{
     public Retailer(UserKey key, String firstName, String lastName) {

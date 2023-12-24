@@ -1,7 +1,7 @@
-package core.model.product.state;
+package core.product.state;
 
 import core.channel.Channel;
-import core.model.product.Product;
+import core.product.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package core.model.party;
+package core.party;
 
 
 import java.security.*;

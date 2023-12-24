@@ -1,6 +1,6 @@
-package core.model.party;
+package core.party;
 
-import core.model.product.Product;
+import core.product.Product;
 
 public class Customer extends Party{
 

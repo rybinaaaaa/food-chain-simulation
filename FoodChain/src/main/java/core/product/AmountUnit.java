@@ -1,4 +1,4 @@
-package core.model.product;
+package core.product;
 
 public enum AmountUnit {
     L, KG, POUND

@@ -1,6 +1,6 @@
-package core.model.product.state;
+package core.product.state;
 
-import core.model.product.Product;
+import core.product.Product;
 
 public class Ready extends State{
     public Ready(Product product) {

@@ -2,8 +2,10 @@ package core.product;
 
 import core.certificate.Certificate;
 import core.product.state.State;
+import core.transaction.Transaction;
 import patterns.prototype.Prototype;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Product implements Prototype<Product> {
@@ -20,6 +22,8 @@ public abstract class Product implements Prototype<Product> {
     private AmountUnit unit;
 
     private State state;
+
+    private List<Transaction> history = new ArrayList<>();
 
     public Product(){}
 
@@ -89,6 +93,10 @@ public abstract class Product implements Prototype<Product> {
 
     public void setUnit(AmountUnit unit) {
         this.unit = unit;
+    }
+
+    public void addToHistory(Transaction transaction) {
+        this.history.add(transaction);
     }
 
     public Product(Long id, Double weight, String name){

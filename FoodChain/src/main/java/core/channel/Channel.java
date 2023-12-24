@@ -75,7 +75,10 @@ public class Channel {
                 logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
 
                 PaymentDetails paymentDetails = processPayment(seller, customer.get());
-                createTransaction(seller, operation, paymentDetails);
+                Transaction transaction = createTransaction(seller, operation, paymentDetails);
+
+                product.addToHistory(transaction);
+
                 logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
 
                 customer.get().processProduct(product);
@@ -89,7 +92,7 @@ public class Channel {
         }
     }
 
-    private void createTransaction(Party seller, Operation operation, PaymentDetails paymentDetails) {
+    private Transaction createTransaction(Party seller, Operation operation, PaymentDetails paymentDetails) {
         Transaction transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails);
         try {
             transaction.setPreviousTransaction(transactions.get(transactions.size() - 1));
@@ -98,6 +101,7 @@ public class Channel {
         }
         transactions.add(transaction);
         logger.info("Transaction " + transaction.getId() + " has been created");
+        return transaction;
     }
 
     private PaymentDetails processPayment(Party seller, Party customer){

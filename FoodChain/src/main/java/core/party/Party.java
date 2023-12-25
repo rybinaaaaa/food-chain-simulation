@@ -6,6 +6,7 @@ import core.operation.Operation;
 import core.transaction.Account;
 import core.channel.Channel;
 import exception.CertificateNotFoundException;
+import exception.NoCustomerFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,9 +46,13 @@ public abstract class Party {
 
     public void publishEvent() {
         logger.info("Party " + getFullName() + " is sending " + product.getName() + " to the channels");
-        for (Channel channel : channels) {
-                channel.publishPartyEvent(operation, product, this);
-        }
+       try {
+           for (Channel channel : channels) {
+               channel.publishPartyEvent(operation, product, this);
+           }
+       } catch(NoCustomerFoundException e){
+           logger.info("No customer has been found for the "  + product.getName());
+       }
     }
 
     public Boolean update(Operation o, Product p, Channel c) {

@@ -8,6 +8,9 @@ import core.transaction.Account;
 import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
 import exception.CertificateNotFoundException;
+import exception.InsufficientAmountOfMoneyException;
+import exception.NoCustomerFoundException;
+import exception.SubscriptionNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +49,7 @@ public class Channel {
         logger.info("Party " + party.getFullName() + " subscribed on " + operation.getName() + " operation.");
     }
 
-    public void unsubscribe(Party party, Operation operation) {
+    public void unsubscribe(Party party, Operation operation) throws SubscriptionNotFoundException {
         if (subscribers.containsKey(operation)) {
             List<Party> partyList = subscribers.get(operation);
             partyList.remove(party);
@@ -55,20 +58,24 @@ public class Channel {
                 subscribers.remove(operation);
             }
         } else {
-            // log - no such subscription
+            throw new SubscriptionNotFoundException();
         }
         logger.info("Party " + party.getFullName() + " unsubscribed from " + operation.getName() + " operation.");
     }
 
-    public void publishPartyEvent(Operation operation, Product product, Party seller) {
-        logger.info("Channel of type " + getType() + " is notifying subscribers about the " + product.getName());
-
-        Optional<Party> customer = Optional.ofNullable(subscribers.entrySet().stream()
+    private Optional<Party> findCustomer(Operation operation, Product product){
+        return Optional.ofNullable(subscribers.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(operation))
                 .flatMap(entry -> entry.getValue().stream())
                 .filter(p -> p.update(operation, product, this)) // Filter parties where update returns true
                 .findFirst() // Find the first party
                 .orElse(null));
+    }
+
+    public void publishPartyEvent(Operation operation, Product product, Party seller) throws NoCustomerFoundException {
+        logger.info("Channel of type " + getType() + " is notifying subscribers about the " + product.getName());
+
+        Optional<Party> customer = findCustomer(operation, product);
         if (customer.isPresent()) {
             try {
                 Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
@@ -80,15 +87,19 @@ public class Channel {
                 product.addToHistory(transaction);
 
                 logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
+                logger.info("The operation with " + seller.getFullName() + " and product " + product.getName() + " has been completed successfully");
 
-                customer.get().processProduct(product);
                 seller.setProduct(null);
                 certificate.setActive(false);
+                customer.get().processProduct(product);
 
-                logger.info("The operation with " + seller.getFullName() + " and product " + product.getName() + "has completed successfully");
             } catch (CertificateNotFoundException e) {
                 logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
+            } catch (InsufficientAmountOfMoneyException e) {
+                logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
             }
+        } else {
+            throw new NoCustomerFoundException();
         }
     }
 
@@ -104,13 +115,17 @@ public class Channel {
         return transaction;
     }
 
-    private PaymentDetails processPayment(Party seller, Party customer){
+    private PaymentDetails processPayment(Party seller, Party customer) throws InsufficientAmountOfMoneyException {
         //transfer money
         Double price = seller.getOperation().getPrice();
         Account sellerAccount =  seller.getAccount();
+
         sellerAccount.setTotalAmount(sellerAccount.getTotalAmount() + price);
 
         Account customerAccount =  customer.getAccount();
+        if(customerAccount.getTotalAmount() < price){
+            throw new InsufficientAmountOfMoneyException();
+        }
         customerAccount.setTotalAmount(customerAccount.getTotalAmount() - price);
         logger.info("Party " + customer.getFullName() + " has paid " + price + " to "  + seller.getFullName());
 

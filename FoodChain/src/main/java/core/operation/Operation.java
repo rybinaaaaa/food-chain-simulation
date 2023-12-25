@@ -23,4 +23,12 @@ public abstract class Operation {
     public Double getPrice() {
         return price;
     }
+
+    public ChannelType getChannelType() {
+        return channelType;
+    }
+
+    public Float getDuration() {
+        return duration;
+    }
 }

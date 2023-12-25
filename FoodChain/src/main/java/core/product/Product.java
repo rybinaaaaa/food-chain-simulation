@@ -99,6 +99,10 @@ public abstract class Product implements Prototype<Product> {
         this.history.add(transaction);
     }
 
+    public List<Transaction> getHistory() {
+        return history;
+    }
+
     public Product(Long id, Double weight, String name){
         this.id = id;
         this.weight = weight;

@@ -10,11 +10,16 @@ import core.party.Party;
 import core.party.PartyFactory;
 import core.party.UserKey;
 import core.product.Carrot;
+import core.report.FoodChainReport;
+import core.report.PartiesReport;
+import core.report.Report;
 import core.transaction.Account;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParserConfigurationException, IllegalAccessException {
         //create products
         Carrot carrot = new Carrot(1L, 0.5, "Norwegian carrot");
         //create the first party
@@ -84,5 +89,10 @@ public class Application {
         farmer.processProduct(carrot);
         farmer.addCertificates(new Certificate(2L, "203EhjfdS", Growing.class, farmer, carrot.getId(), true));
         farmer.processProduct(carrot);
+
+        PartiesReport report = new PartiesReport();
+        report.buildReport(carrot);
+        FoodChainReport report1 = new FoodChainReport();
+        report1.buildReport(carrot);
     }
 }

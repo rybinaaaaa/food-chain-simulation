@@ -69,4 +69,16 @@ public class Transaction {
     public Long getId() {
         return id;
     }
+
+    public Party getParty() {
+        return party;
+    }
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public PaymentDetails getPaymentDetails() {
+        return paymentDetails;
+    }
 }

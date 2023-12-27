@@ -20,6 +20,8 @@ public class Transaction {
 
     private final PaymentDetails paymentDetails;
 
+    private TransactionResult transactionResult;
+
 
     public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails) {
         this.id = id;
@@ -80,5 +82,13 @@ public class Transaction {
 
     public PaymentDetails getPaymentDetails() {
         return paymentDetails;
+    }
+
+    public TransactionResult getTransactionResult() {
+        return transactionResult;
+    }
+
+    public void setTransactionResult(TransactionResult transactionResult) {
+        this.transactionResult = transactionResult;
     }
 }

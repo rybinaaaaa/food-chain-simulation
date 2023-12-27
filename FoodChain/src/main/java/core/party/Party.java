@@ -116,10 +116,15 @@ public abstract class Party {
 
     public Certificate getCertificateByProductAndOperation(Product product, Operation operation) throws CertificateNotFoundException {
         if (Objects.isNull(certificates)) throw new CertificateNotFoundException();
-        return this.certificates.stream().filter(c -> Objects.equals(c.getProductId(), product.getId()) && c.getOperationClass() == operation.getClass() && c.isActive()).findAny().orElseThrow(CertificateNotFoundException::new);
+        return this.certificates.stream().filter(c -> Objects.equals(c.getProductId(), product.getId()) && c.getOperationClass() == operation.getClass()).findAny().orElseThrow(CertificateNotFoundException::new);
     }
 
     public void addCertificates(Certificate ...certificates) {
-        Collections.addAll(this.certificates, certificates);
+        for (Certificate c: certificates) {
+            this.certificates.stream().filter(certificate -> Objects.equals(certificate.getProductId(), c.getProductId()) && certificate.getOperationClass() == c.getOperationClass()).findAny().orElseGet(() -> {
+                this.certificates.add(c);
+                return c;
+            });
+        }
     }
 }

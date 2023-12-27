@@ -16,7 +16,6 @@ public class TransactionReport extends Report{
     @Override
     public void buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         List<Transaction> transactions = product.getHistory();
-        Double price = product.getPrice();
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document newDoc = builder.newDocument();

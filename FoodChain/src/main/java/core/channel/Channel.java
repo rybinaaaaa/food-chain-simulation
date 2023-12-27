@@ -7,6 +7,7 @@ import core.operation.Operation;
 import core.transaction.Account;
 import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
+import core.transaction.TransactionResult;
 import exception.CertificateNotFoundException;
 import exception.InsufficientAmountOfMoneyException;
 import exception.NoCustomerFoundException;
@@ -77,12 +78,19 @@ public class Channel {
 
         Optional<Party> customer = findCustomer(operation, product);
         if (customer.isPresent()) {
+            Transaction transaction = null;
             try {
-                Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
-                logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
-
                 PaymentDetails paymentDetails = processPayment(seller, customer.get());
-                Transaction transaction = createTransaction(seller, operation, paymentDetails);
+                transaction = createTransaction(seller, operation, paymentDetails);
+
+                Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
+
+                if (!certificate.isActive()) {
+                    logger.error("Party- " + customer.get().getFullName() + " tried to use inactive certificate! ");
+                    transaction.setTransactionResult(TransactionResult.INACTIVE_CERTIFICATE);
+                }
+
+                logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
 
                 product.addToHistory(transaction);
 
@@ -95,6 +103,7 @@ public class Channel {
 
             } catch (CertificateNotFoundException e) {
                 logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
+                transaction.setTransactionResult(TransactionResult.CERTIFICATE_NOT_EXIST);
             } catch (InsufficientAmountOfMoneyException e) {
                 logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
             }
@@ -112,6 +121,7 @@ public class Channel {
         }
         transactions.add(transaction);
         logger.info("Transaction " + transaction.getId() + " has been created");
+        transaction.setTransactionResult(TransactionResult.SUCCESS);
         return transaction;
     }
 

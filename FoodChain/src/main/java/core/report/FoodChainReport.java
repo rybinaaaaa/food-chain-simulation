@@ -1,10 +1,10 @@
 package core.report;
 
-import core.channel.Channel;
 import core.operation.Operation;
 import core.party.Party;
 import core.product.Product;
 import core.transaction.Transaction;
+import core.transaction.TransactionResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -29,6 +29,9 @@ public class FoodChainReport extends Report {
         newDoc.appendChild(rootElement);
 
         for (Transaction t : transactions) {
+            if (t.getTransactionResult() != TransactionResult.SUCCESS) {
+                continue;
+            }
             Element detailElement = newDoc.createElement("reportDetail");
 
             Element operationDetailElement = newDoc.createElement("operationDetail");

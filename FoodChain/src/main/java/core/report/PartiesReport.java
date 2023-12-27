@@ -2,6 +2,7 @@ package core.report;
 
 import core.product.Product;
 import core.transaction.Transaction;
+import core.transaction.TransactionResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,6 +26,9 @@ public class PartiesReport extends Report {
         newDoc.appendChild(rootElement);
 
         for (Transaction t : transactions) {
+            if (t.getTransactionResult() != TransactionResult.SUCCESS) {
+                continue;
+            }
             Element detailElement = newDoc.createElement("reportDetail");
             rootElement.appendChild(detailElement);
 

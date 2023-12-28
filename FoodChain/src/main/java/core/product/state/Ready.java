@@ -17,7 +17,6 @@ public class Ready extends State{
             // Handle the exception if the sleep is interrupted
             e.printStackTrace();
         }
-        setNextState();
     }
 
 }

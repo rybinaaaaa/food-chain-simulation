@@ -2,6 +2,8 @@ package core.party;
 
 import core.certificate.Certificate;
 import core.product.Product;
+import core.product.state.Received;
+import core.product.state.State;
 import core.operation.Operation;
 import core.transaction.Account;
 import core.channel.Channel;
@@ -40,7 +42,7 @@ public abstract class Party {
 
     public void processProduct(Product product) {
         this.setProduct(product);
-        //states to do
+//        product.setState(new Received(product));
         publishEvent();
     }
 

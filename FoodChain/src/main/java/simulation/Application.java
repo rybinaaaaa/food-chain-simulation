@@ -22,6 +22,7 @@ public class Application {
     public static void main(String[] args) throws ParserConfigurationException, IllegalAccessException {
         //create products
         Carrot carrot = new Carrot(1L, 0.5, "Norwegian carrot");
+        Carrot ecoCarrot = (Carrot) carrot.clone();
         //create the first party
         Party farmer = PartyFactory.createParty(PartyFactory.PartyType.FARMER, new UserKey(), "Dan", "Samon");
         farmer.setAccount(new Account(111L, 2000000D));

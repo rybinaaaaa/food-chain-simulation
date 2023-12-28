@@ -18,7 +18,7 @@ public class PartyFactory {
             case WAREHOUSE:
                 return new Warehouse(key, firstName, lastName);
             case DELIVER:
-                return new Warehouse(key, firstName, lastName);
+                return new Deliver(key, firstName, lastName);
             default:
                 throw new IllegalArgumentException("Unknown PartyType: " + partyType);
         }

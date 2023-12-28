@@ -7,6 +7,7 @@ public class Processing extends State {
     public Processing(Product product) {
         super(product);
         this.timeToProcess = 4000;
+        process();
     }
 
     @Override

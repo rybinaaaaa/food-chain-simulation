@@ -8,18 +8,18 @@ import patterns.prototype.Prototype;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Product implements Prototype<Product> {
+public class Product implements Prototype<Product> {
     private Long id;
 
-    private Double weight;
+    protected Double weight;
 
-    private String name;
+    protected String name;
 
-    private Double price;
+    protected Double price;
 
-    private int amount;
+    protected int amount;
 
-    private AmountUnit unit;
+    protected AmountUnit unit;
 
     private State state;
 
@@ -28,15 +28,16 @@ public abstract class Product implements Prototype<Product> {
     public Product(){}
 
     @Override
-    public void clone(Product prototype) {
-        prototype.id = id;
-        prototype.weight = weight;
-        prototype.name = name;
-        prototype.price = price;
-        prototype.amount = amount;
-//        prototype.certificates = certificates;
-        prototype.unit = unit;
-//        prototype.state = ProductState.RECEIVED;
+    public Prototype<Product> clone() {
+        return new Product(weight, name, price, amount, unit);
+    }
+
+    public Product(Double weight, String name, Double price, int amount, AmountUnit unit) {
+        this.weight = weight;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     public State getState() {
@@ -108,4 +109,6 @@ public abstract class Product implements Prototype<Product> {
         this.weight = weight;
         this.name = name;
     }
+
+
 }

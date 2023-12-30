@@ -6,6 +6,7 @@ import core.certificate.Certificate;
 import core.channel.Channel;
 import core.channel.ChannelType;
 import core.operation.*;
+import core.party.Farmer;
 import core.party.Party;
 import core.party.PartyFactory;
 import core.party.UserKey;
@@ -78,7 +79,7 @@ public class Application {
         prepareVeggiChannel.subscribe(processor2, growing);
 
         //add certificate for the second party
-        processor2.addCertificates(new Certificate(334L, "ffsjldf", Processing.class, processor1, carrot.getId(), true));
+        processor1.addCertificates(new Certificate(334L, "ffsjldf", Processing.class, processor1, carrot.getId(), true));
 
         prepareVeggiChannel.subscribe(warehouse, processing);
         prepareVeggiChannel.subscribe(deliver, storing);
@@ -87,8 +88,13 @@ public class Application {
 
 
         //run the process of exchange
-        farmer.processProduct(carrot);
+//        farmer.processProduct(carrot);
         farmer.addCertificates(new Certificate(2L, "203EhjfdS", Growing.class, farmer, carrot.getId(), true));
+        warehouse.addCertificates(new Certificate(324L, "ff99ldf", Storing.class, warehouse, carrot.getId(), true));
+        deliver.addCertificates(new Certificate(327L, "f00lldf", Delivering.class, deliver, carrot.getId(), true));
+        retailer.addCertificates(new Certificate(328L, "f11ll8f", Selling.class, retailer, carrot.getId(), true));
+
+        processor1.setRetroactiveChange(true);
         farmer.processProduct(carrot);
 
         PartiesReport report = new PartiesReport();

@@ -23,15 +23,17 @@ public abstract class Party {
 
     private Account account;
 
-    final private List<Channel> channels = new ArrayList<>();
+    final protected List<Channel> channels = new ArrayList<>();
 
-    private Product product;
+    protected Product product;
 
-    private Operation operation;
+    protected Operation operation;
 
     protected static final Logger logger = LogManager.getLogger(Channel.class);
 
     private List<Certificate> certificates = new ArrayList<>();
+
+    private Boolean isRetroactiveChange = false;
 
 
     public Party(UserKey key, String firstName, String lastName) {
@@ -42,7 +44,7 @@ public abstract class Party {
 
     public void processProduct(Product product) {
         this.setProduct(product);
-//        product.setState(new Received(product));
+        product.setState(new Received(product));
         publishEvent();
     }
 
@@ -115,6 +117,15 @@ public abstract class Party {
     public void setOperation(Operation operation) {
         this.operation = operation;
     }
+
+    public void setRetroactiveChange(Boolean retroactiveChange) {
+        isRetroactiveChange = retroactiveChange;
+    }
+
+    public Boolean isRetroactiveChange() {
+        return isRetroactiveChange;
+    }
+
 
     public Certificate getCertificateByProductAndOperation(Product product, Operation operation) throws CertificateNotFoundException {
         if (Objects.isNull(certificates)) throw new CertificateNotFoundException();

@@ -5,7 +5,7 @@ import core.product.Product;
 public class Received extends State{
     public Received(Product product) {
         super(product);
-        this.timeToProcess = 2000;
+        this.timeToProcess = 1000;
         process();
     }
 

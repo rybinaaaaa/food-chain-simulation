@@ -8,10 +8,7 @@ import core.transaction.Account;
 import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
 import core.transaction.TransactionResult;
-import exception.CertificateNotFoundException;
-import exception.InsufficientAmountOfMoneyException;
-import exception.NoCustomerFoundException;
-import exception.SubscriptionNotFoundException;
+import exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,6 +28,7 @@ public class Channel {
     private final AtomicLong transactionIdCounter = new AtomicLong(System.currentTimeMillis());
 
     private static final Logger logger = LogManager.getLogger(Channel.class);
+
 
 
     public Channel(ChannelType type) {
@@ -80,18 +78,15 @@ public class Channel {
         if (customer.isPresent()) {
             Transaction transaction = null;
             try {
+                logger.info("Party " + customer.get().getFullName() + " wants to purchase " + product.getName());
                 PaymentDetails paymentDetails = processPayment(seller, customer.get());
                 transaction = createTransaction(seller, operation, paymentDetails);
-
                 Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
 
                 if (!certificate.isActive()) {
                     logger.error("Party- " + customer.get().getFullName() + " tried to use inactive certificate! ");
                     transaction.setTransactionResult(TransactionResult.INACTIVE_CERTIFICATE);
                 }
-
-                logger.info("Party- " + customer.get().getFullName() + " accepts the " + product.getName());
-
                 product.addToHistory(transaction);
 
                 logger.info("Party " + customer.get().getFullName() + " owns the " + product.getName());
@@ -102,27 +97,37 @@ public class Channel {
                 customer.get().processProduct(product);
 
             } catch (CertificateNotFoundException e) {
+                //сообщение о невозможности отправки продукта в каналы выписывается после пересылки этого продукта в эти каналы и его продажи
                 logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
                 transaction.setTransactionResult(TransactionResult.CERTIFICATE_NOT_EXIST);
             } catch (InsufficientAmountOfMoneyException e) {
                 logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
+            } catch (InvalidHashException e){
+                logger.warn("Retroactive change attempt detected! Hash is invalid! Caused by party " + seller.getFullName());
             }
         } else {
             throw new NoCustomerFoundException();
         }
     }
 
-    private Transaction createTransaction(Party seller, Operation operation, PaymentDetails paymentDetails) {
-        Transaction transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails);
-        try {
-            transaction.setPreviousTransaction(transactions.get(transactions.size() - 1));
-        } catch (IndexOutOfBoundsException e) {
-            transaction.setPreviousTransaction(null);
+    private Transaction createTransaction(Party seller, Operation operation, PaymentDetails paymentDetails) throws InvalidHashException {
+        Transaction transaction;
+        if (transactions.isEmpty()) {
+            transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails, null);
+        } else {
+            transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails, transactions.get(transactions.size() - 1));
+            if(seller.isRetroactiveChange()) {
+                transaction.setPreviousTransaction(null);
+            }
+            logger.info("Transaction " + transaction.getId() + " has been created");
+            if(!transaction.isValid()) {
+                throw new InvalidHashException();
+            }
         }
-        transactions.add(transaction);
-        logger.info("Transaction " + transaction.getId() + " has been created");
-        transaction.setTransactionResult(TransactionResult.SUCCESS);
-        return transaction;
+            transactions.add(transaction);
+            logger.info("Transaction " + transaction.getId() + " has been created");
+            transaction.setTransactionResult(TransactionResult.SUCCESS);
+            return transaction;
     }
 
     private PaymentDetails processPayment(Party seller, Party customer) throws InsufficientAmountOfMoneyException {
@@ -171,4 +176,6 @@ public class Channel {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+
 }

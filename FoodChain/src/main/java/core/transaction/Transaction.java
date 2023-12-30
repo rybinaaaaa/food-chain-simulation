@@ -23,19 +23,34 @@ public class Transaction {
     private TransactionResult transactionResult;
 
 
-    public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails) {
+    public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails, Transaction previousTransaction) {
         this.id = id;
         this.party = party;
         this.operation = operation;
         this.paymentDetails = paymentDetails;
+        this.previousTransaction = previousTransaction;
+        this.hash = createHash();
+    }
+
+    public Boolean isValid(){
+        return hash.equals(createHash());
     }
 
     public String createHash(){
-        String dataToHash = previousTransaction.getHash()
-                + Long.toString(id)
-                + party.getFirstName() + party.getLastName()
-                + paymentDetails.getHash()
-                + operation.getName();
+        String dataToHash;
+        if(previousTransaction == null){
+            dataToHash = "null"
+                    + Long.toString(id)
+                    + party.getFirstName() + party.getLastName()
+                    + paymentDetails.getHash()
+                    + operation.getName();
+        } else {
+            dataToHash = previousTransaction.getHash()
+                    + Long.toString(id)
+                    + party.getFirstName() + party.getLastName()
+                    + paymentDetails.getHash()
+                    + operation.getName();
+        }
         MessageDigest digest = null;
         byte[] bytes = null;
         try {
@@ -48,8 +63,7 @@ public class Transaction {
         for (byte b : bytes) {
             buffer.append(String.format("%02x", b));
         }
-        this.hash = buffer.toString();
-        return hash;
+        return buffer.toString();
     }
 
     public String getHash() {

@@ -40,10 +40,6 @@ public class Product implements Prototype<Product> {
         this.unit = unit;
     }
 
-    public State getState() {
-        return state;
-    }
-
     public void setState(State state) {
         this.state = state;
     }
@@ -56,44 +52,12 @@ public class Product implements Prototype<Product> {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public AmountUnit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(AmountUnit unit) {
-        this.unit = unit;
     }
 
     public void addToHistory(Transaction transaction) {

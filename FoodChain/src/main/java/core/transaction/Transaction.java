@@ -32,9 +32,19 @@ public class Transaction {
         this.hash = createHash();
     }
 
+    /**
+     * Checks if current transaction is valid by comparing hash
+     * @return true if valid, false if invalid
+     */
+
     public Boolean isValid(){
         return hash.equals(createHash());
     }
+
+    /**
+     * Creates hash for current transaction
+     * @return Created hash
+     */
 
     public String createHash(){
         String dataToHash;
@@ -70,14 +80,6 @@ public class Transaction {
         return hash;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public Transaction getPreviousTransaction() {
-        return previousTransaction;
-    }
-
     public void setPreviousTransaction(Transaction previousTransaction) {
         this.previousTransaction = previousTransaction;
     }
@@ -92,10 +94,6 @@ public class Transaction {
 
     public Operation getOperation() {
         return operation;
-    }
-
-    public PaymentDetails getPaymentDetails() {
-        return paymentDetails;
     }
 
     public TransactionResult getTransactionResult() {

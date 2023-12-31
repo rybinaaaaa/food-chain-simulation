@@ -24,10 +24,6 @@ public abstract class Operation {
         return price;
     }
 
-    public ChannelType getChannelType() {
-        return channelType;
-    }
-
     public Float getDuration() {
         return duration;
     }

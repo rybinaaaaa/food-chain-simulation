@@ -22,9 +22,15 @@ public class PaymentDetails {
         this.sellerId = sellerId;
         this.customerID = customerID;
         this.amount = amount;
+        this.hash = generateHash();
     }
 
-    private void generateHash(){
+    /**
+     * Creates hash for current payment
+     * @return created hash
+     */
+
+    private String generateHash(){
         String dataToHash =
                 Long.toString(paymentId)
                 + sellerId.getPublicKey()
@@ -42,7 +48,7 @@ public class PaymentDetails {
         for (byte b : bytes) {
             buffer.append(String.format("%02x", b));
         }
-        this.hash = buffer.toString();
+        return buffer.toString();
     }
 
     public String getHash() {

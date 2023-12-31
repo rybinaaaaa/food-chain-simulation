@@ -31,7 +31,7 @@ public abstract class Party {
 
     protected static final Logger logger = LogManager.getLogger(Channel.class);
 
-    private List<Certificate> certificates = new ArrayList<>();
+    private final List<Certificate> certificates = new ArrayList<>();
 
     private Boolean isRetroactiveChange = false;
 
@@ -42,11 +42,20 @@ public abstract class Party {
         this.lastName = lastName;
     }
 
+    /**
+     * Conduct an operation on a product by changing its states
+     * @param product Particular product
+     */
+
     public void processProduct(Product product) {
         this.setProduct(product);
         product.setState(new Received(product));
         publishEvent();
     }
+
+    /**
+     * Notifies channels about the product
+     */
 
     public void publishEvent() {
         logger.info("Party " + getFullName() + " is sending " + product.getName() + " to the channels");
@@ -58,6 +67,14 @@ public abstract class Party {
            logger.info("No customer has been found for the "  + product.getName());
        }
     }
+
+    /**
+     * Receives a notification from a channel
+     * @param o Operation conducted on a product
+     * @param p Particular product
+     * @param c Channel which sent the notification
+     * @return consent to the product purchase
+     */
 
     public Boolean update(Operation o, Product p, Channel c) {
 //        try {
@@ -94,10 +111,6 @@ public abstract class Party {
         this.account = account;
     }
 
-    public List<Channel> getChannels() {
-        return channels;
-    }
-
     public void addChannel(Channel channel) {
         this.channels.add(channel);
     }
@@ -126,11 +139,19 @@ public abstract class Party {
         return isRetroactiveChange;
     }
 
+    /**
+     * Finds a certificate of the party
+     * @param product Particular product
+     * @param operation Operation which party performs on the product
+     * @return Found certificate or null
+     * @throws CertificateNotFoundException Exception if no certificate was found
+     */
 
     public Certificate getCertificateByProductAndOperation(Product product, Operation operation) throws CertificateNotFoundException {
         if (Objects.isNull(certificates)) throw new CertificateNotFoundException();
         return this.certificates.stream().filter(c -> Objects.equals(c.getProductId(), product.getId()) && c.getOperationClass() == operation.getClass()).findAny().orElseThrow(CertificateNotFoundException::new);
     }
+
 
     public void addCertificates(Certificate ...certificates) {
         for (Certificate c: certificates) {

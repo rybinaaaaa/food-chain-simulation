@@ -14,7 +14,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class SecurityReport extends Report{
-    private int problemsAmount;
 
     @Override
     public void buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {

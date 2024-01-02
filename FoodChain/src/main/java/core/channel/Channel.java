@@ -115,6 +115,8 @@ public class Channel {
                 if (!certificate.isActive()) {
                     logger.error("Party- " + customer.get().getFullName() + " tried to use inactive certificate! ");
                     transaction.setTransactionResult(TransactionResult.INACTIVE_CERTIFICATE);
+                    product.addToHistory(transaction);
+                    return;
                 }
                 //write to the product history
                 product.addToHistory(transaction);
@@ -132,6 +134,7 @@ public class Channel {
                 //сообщение о невозможности отправки продукта в каналы выписывается после пересылки этого продукта в эти каналы и его продажи
                 logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
                 transaction.setTransactionResult(TransactionResult.CERTIFICATE_NOT_EXIST);
+                product.addToHistory(transaction);
             } catch (InsufficientAmountOfMoneyException e) {
                 logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
             } catch (InvalidHashException e){

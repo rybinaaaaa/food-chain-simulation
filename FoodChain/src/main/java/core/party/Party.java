@@ -155,10 +155,13 @@ public abstract class Party {
 
     public void addCertificates(Certificate ...certificates) {
         for (Certificate c: certificates) {
-            this.certificates.stream().filter(certificate -> Objects.equals(certificate.getProductId(), c.getProductId()) && certificate.getOperationClass() == c.getOperationClass()).findAny().orElseGet(() -> {
+            Certificate existingCertificate = this.certificates.stream().filter(certificate -> Objects.equals(certificate.getProductId(), c.getProductId()) && certificate.getOperationClass() == c.getOperationClass()).findAny().orElseGet(() -> {
                 this.certificates.add(c);
                 return c;
             });
+            if (existingCertificate != c) {
+                logger.error("Attempting to add an existing certificate!");
+            }
         }
     }
 }

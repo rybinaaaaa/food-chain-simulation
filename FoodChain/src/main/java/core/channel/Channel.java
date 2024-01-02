@@ -117,7 +117,7 @@ public class Channel {
                 Certificate certificate = seller.getCertificateByProductAndOperation(product, operation);
 
                 if (!certificate.isActive()) {
-                    logger.error("Party- " + customer.get().getFullName() + " tried to use inactive certificate! ");
+                    logger.error("Party - " + customer.get().getFullName() + " tried to use inactive certificate! ");
                     transaction.setTransactionResult(TransactionResult.INACTIVE_CERTIFICATE);
                     product.addToHistory(transaction);
                     return;

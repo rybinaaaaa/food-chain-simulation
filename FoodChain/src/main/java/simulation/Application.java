@@ -78,6 +78,7 @@ public class Application {
 
         //add certificate for the second party
         processor1.addCertificates(new Certificate(334L, "ffsjldf", Processing.class, processor1, carrot.getId(), true));
+        processor1.addCertificates(new Certificate(237248L, "ffsjldf", Processing.class, processor1, carrot.getId(), true));
 
         prepareVeggiChannel.subscribe(warehouse, processing);
         prepareVeggiChannel.subscribe(deliver, storing);
@@ -93,6 +94,7 @@ public class Application {
         retailer.addCertificates(new Certificate(328L, "f11ll8f", Selling.class, retailer, carrot.getId(), true));
 
         processor1.setRetroactiveChange(true);
+        farmer.processProduct(carrot);
         farmer.processProduct(carrot);
 
         PartiesReport report = new PartiesReport(carrot);

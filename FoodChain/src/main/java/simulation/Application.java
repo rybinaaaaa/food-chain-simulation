@@ -11,9 +11,7 @@ import core.party.Party;
 import core.party.PartyFactory;
 import core.party.UserKey;
 import core.product.Carrot;
-import core.report.FoodChainReport;
-import core.report.PartiesReport;
-import core.report.Report;
+import core.report.*;
 import core.transaction.Account;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -97,9 +95,12 @@ public class Application {
         processor1.setRetroactiveChange(true);
         farmer.processProduct(carrot);
 
-        PartiesReport report = new PartiesReport();
-        report.buildReport(carrot);
-        FoodChainReport report1 = new FoodChainReport();
-        report1.buildReport(carrot);
+        PartiesReport report = new PartiesReport(carrot);
+        report.downloadReport();
+
+        ReportProxy reportProxy = new ReportProxy(carrot, ReportType.PARTIES);
+        reportProxy.downloadReport();
+//        FoodChainReport report1 = new FoodChainReport();
+//        report1.buildReport(carrot);
     }
 }

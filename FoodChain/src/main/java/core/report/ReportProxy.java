@@ -30,6 +30,6 @@ public class ReportProxy extends Report {
 
     public void downloadReport() throws ParserConfigurationException, IllegalAccessException {
         this.document = this.buildReport(this.product);
-        super.downloadReport();
+        report.downloadReport();
     }
 }

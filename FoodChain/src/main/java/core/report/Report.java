@@ -35,11 +35,11 @@ public abstract class Report {
     public void downloadReport() throws ParserConfigurationException, IllegalAccessException {
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(fileName + ".xml"));
+            DOMSource source = new DOMSource(this.document);
+            StreamResult result = new StreamResult(new File(this.fileName + ".xml"));
 
             transformer.transform(source, result);
-            logger.info("The report has been successfully stored in  " + fileName + ".xml");
+            logger.info("The report has been successfully stored in  " + this.fileName + ".xml");
         } catch (Exception e) {
             e.printStackTrace();
         }

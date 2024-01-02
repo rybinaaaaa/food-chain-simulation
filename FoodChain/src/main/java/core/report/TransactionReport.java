@@ -13,8 +13,13 @@ import java.util.List;
 
 public class TransactionReport extends Report{
 
+    public TransactionReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+        super(product);
+        this.fileName = "transactionsReport" + this.id.toString();
+    }
+
     @Override
-    public void buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+    public Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         List<Transaction> transactions = product.getHistory();
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -36,6 +41,6 @@ public class TransactionReport extends Report{
             }
         }
 
-        downloadReport(newDoc, "transactionsReport");
+        return newDoc;
     }
 }

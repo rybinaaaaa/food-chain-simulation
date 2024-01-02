@@ -13,14 +13,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Objects;
 
 public class FoodChainReport extends Report {
+    public FoodChainReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+        super(product);
+        this.fileName = "foodChainReport" + this.id.toString();
+    }
 
     @Override
-    public void buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+    public Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         List<Transaction> transactions = product.getHistory();
         Double price = product.getPrice();
+//        TODO: create margin results
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document newDoc = builder.newDocument();
@@ -72,6 +76,6 @@ public class FoodChainReport extends Report {
             }
         }
 
-        downloadReport(newDoc, "foodChainReport");
+        return newDoc;
     }
 }

@@ -1,9 +1,9 @@
 package core.channel;
 
 import core.certificate.Certificate;
+import core.operation.Operation;
 import core.party.Party;
 import core.product.Product;
-import core.operation.Operation;
 import core.transaction.Account;
 import core.transaction.PaymentDetails;
 import core.transaction.Transaction;
@@ -37,7 +37,8 @@ public class Channel {
 
     /**
      * Adds a new subscriber to the subscribers list
-     * @param party Party - subscriber
+     *
+     * @param party     Party - subscriber
      * @param operation Operation to subscribe on
      */
     public void subscribe(Party party, Operation operation) {
@@ -55,7 +56,8 @@ public class Channel {
 
     /**
      * Removes a subscriber from the subscribers list
-     * @param party Party - subscriber
+     *
+     * @param party     Party - subscriber
      * @param operation Operation to unsubscribe from
      */
     public void unsubscribe(Party party, Operation operation) throws SubscriptionNotFoundException {
@@ -74,12 +76,13 @@ public class Channel {
 
     /**
      * Notifies subscribers about the product and finds a customer for this product
+     *
      * @param operation Operation conducted on a product
-     * @param product Particular product
+     * @param product   Particular product
      * @return Party-customer for the product
      */
 
-    private Optional<Party> findCustomer(Operation operation, Product product){
+    private Optional<Party> findCustomer(Operation operation, Product product) {
         return Optional.ofNullable(subscribers.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(operation))
                 .flatMap(entry -> entry.getValue().stream())
@@ -91,9 +94,10 @@ public class Channel {
     /**
      * Performs transition of a product between two parties, creates payment and transaction, checks validity of a certificate,
      * passes processing of a product to another party
+     *
      * @param operation Operation conducted on a product by seller
-     * @param product Particular product
-     * @param seller Party which sells a product
+     * @param product   Particular product
+     * @param seller    Party which sells a product
      * @throws NoCustomerFoundException Exception if no customer was found for a product
      */
 
@@ -137,7 +141,7 @@ public class Channel {
             } catch (InsufficientAmountOfMoneyException e) {
                 logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
                 transaction.setTransactionResult(TransactionResult.NOT_ENOUGH_MONEY);
-            } catch (InvalidHashException e){
+            } catch (InvalidHashException e) {
                 logger.warn("Retroactive change attempt detected! Hash is invalid! Caused by party " + seller.getFullName());
             }
         } else {
@@ -147,8 +151,9 @@ public class Channel {
 
     /**
      * Creates transaction
-     * @param seller Party which sells a product
-     * @param operation Operation conducted on a product
+     *
+     * @param seller         Party which sells a product
+     * @param operation      Operation conducted on a product
      * @param paymentDetails Details of the performed payment
      * @return Created transaction
      * @throws InvalidHashException Exception in case of transaction modification attempt(invalid hash)
@@ -161,12 +166,12 @@ public class Channel {
             transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails, null);
         } else {
             transaction = new Transaction(generateTransactionId(), seller, operation, paymentDetails, transactions.get(transactions.size() - 1));
-            if(seller.isRetroactiveChange()) {
+            if (seller.isRetroactiveChange()) {
                 transaction.setPreviousTransaction(null);
             }
             logger.info("Transaction " + transaction.getId() + " has been created");
-           //check the validity of the transaction
-            if(!transaction.isValid()) {
+            //check the validity of the transaction
+            if (!transaction.isValid()) {
                 throw new InvalidHashException();
             }
         }
@@ -179,7 +184,8 @@ public class Channel {
 
     /**
      * Processes payment and creates PaymentDetails
-     * @param seller Party which sells a product
+     *
+     * @param seller   Party which sells a product
      * @param customer Party which buys a product
      * @return Created PaymentDetails
      * @throws InsufficientAmountOfMoneyException Exception if customer does not have enough money for the purchase
@@ -187,18 +193,18 @@ public class Channel {
 
     private PaymentDetails processPayment(Party seller, Party customer) throws InsufficientAmountOfMoneyException {
         Double price = seller.getOperation().getPrice();
-        Account sellerAccount =  seller.getAccount();
-        Account customerAccount =  customer.getAccount();
+        Account sellerAccount = seller.getAccount();
+        Account customerAccount = customer.getAccount();
 
         //check if customer has enough money
-        if(customerAccount.getTotalAmount() < price){
+        if (customerAccount.getTotalAmount() < price) {
             throw new InsufficientAmountOfMoneyException();
         }
         //transfer money
         sellerAccount.setTotalAmount(sellerAccount.getTotalAmount() + price);
 
         customerAccount.setTotalAmount(customerAccount.getTotalAmount() - price);
-        logger.info("Party " + customer.getFullName() + " has paid " + price + " to "  + seller.getFullName());
+        logger.info("Party " + customer.getFullName() + " has paid " + price + " to " + seller.getFullName());
 
         //create PaymentDetails
         return new PaymentDetails(generateTransactionId(), seller.getKey(), customer.getKey(), price);
@@ -211,8 +217,4 @@ public class Channel {
     public ChannelType getType() {
         return type;
     }
-
-
-
-
 }

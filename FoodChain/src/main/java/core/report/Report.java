@@ -1,6 +1,5 @@
 package core.report;
 
-import core.channel.Channel;
 import core.product.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,15 +11,31 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Report {
-    private Long id;
+    protected Long id;
+
     private static final Logger logger = LogManager.getLogger(Report.class);
 
-    public void downloadReport(Document newDoc, String fileName) {
+    protected static final AtomicLong counter = new AtomicLong();
+
+    protected Document document;
+
+    protected String fileName;
+
+    public Report(Product product) throws ParserConfigurationException, IllegalAccessException {
+        this.id = counter.getAndIncrement();
+        this.document = buildReport(product);
+    }
+
+    protected Report() {
+    }
+
+    public void downloadReport() throws ParserConfigurationException, IllegalAccessException {
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            DOMSource source = new DOMSource(newDoc);
+            DOMSource source = new DOMSource(document);
             StreamResult result = new StreamResult(new File(fileName + ".xml"));
 
             transformer.transform(source, result);
@@ -30,5 +45,5 @@ public abstract class Report {
         }
     }
 
-    abstract void buildReport(Product product) throws ParserConfigurationException, IllegalAccessException;
+    abstract Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException;
 }

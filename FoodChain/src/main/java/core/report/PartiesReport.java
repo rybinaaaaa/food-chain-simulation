@@ -14,8 +14,13 @@ import java.util.List;
 public class PartiesReport extends Report {
     private Double margin;
 
+    public PartiesReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+        super(product);
+        this.fileName = "partiesReport" + this.id.toString();
+    }
+
     @Override
-    public void buildReport(Product product) throws ParserConfigurationException {
+    public Document buildReport(Product product) throws ParserConfigurationException {
         List<Transaction> transactions = product.getHistory();
         Double price = product.getPrice();
 
@@ -39,6 +44,6 @@ public class PartiesReport extends Report {
             detailElement.setAttribute("Duration", Float.toString(t.getOperation().getDuration()));
         }
 
-        downloadReport(newDoc, "partiesReport");
+        return newDoc;
     }
 }

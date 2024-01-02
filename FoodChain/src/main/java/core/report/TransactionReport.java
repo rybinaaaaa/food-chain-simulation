@@ -19,7 +19,7 @@ public class TransactionReport extends Report{
     }
 
     @Override
-    public Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+    protected Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         List<Transaction> transactions = product.getHistory();
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

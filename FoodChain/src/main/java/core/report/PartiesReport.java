@@ -20,7 +20,7 @@ public class PartiesReport extends Report {
     }
 
     @Override
-    public Document buildReport(Product product) throws ParserConfigurationException {
+    protected Document buildReport(Product product) throws ParserConfigurationException {
         List<Transaction> transactions = product.getHistory();
         Double price = product.getPrice();
 

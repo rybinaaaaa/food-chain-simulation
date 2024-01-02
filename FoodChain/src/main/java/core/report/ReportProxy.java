@@ -16,7 +16,7 @@ public class ReportProxy extends Report {
     }
 
     @Override
-    Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
+    protected Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         if (report == null) {
             switch (reportType) {
                 case PARTIES -> this.report = new PartiesReport(product);

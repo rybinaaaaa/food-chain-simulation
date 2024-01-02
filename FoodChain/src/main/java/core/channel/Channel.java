@@ -129,7 +129,6 @@ public class Channel {
                 //active the certificate
                 certificate.setActive(false);
                 customer.get().processProduct(product);
-
             } catch (CertificateNotFoundException e) {
                 //сообщение о невозможности отправки продукта в каналы выписывается после пересылки этого продукта в эти каналы и его продажи
                 logger.warn("Party " + seller.getFullName() + " has no certificate to send " + product.getName() + " to the channels");
@@ -137,6 +136,7 @@ public class Channel {
                 product.addToHistory(transaction);
             } catch (InsufficientAmountOfMoneyException e) {
                 logger.warn("Party " + customer.get().getFullName() + " does not have enough money to purchase " + product.getName());
+                transaction.setTransactionResult(TransactionResult.NOT_ENOUGH_MONEY);
             } catch (InvalidHashException e){
                 logger.warn("Retroactive change attempt detected! Hash is invalid! Caused by party " + seller.getFullName());
             }

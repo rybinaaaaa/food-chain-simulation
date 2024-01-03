@@ -110,7 +110,7 @@ public class Channel {
             try {
                 logger.info("Party " + customer.get().getFullName() + " wants to purchase " + product.getName());
                 //process payment
-                PaymentDetails paymentDetails = processPayment(seller, customer.get());
+                PaymentDetails paymentDetails = processPayment(seller, customer.get(), product);
                 //create transaction
                 transaction = createTransaction(seller, operation, paymentDetails);
                 //check the certificate
@@ -177,7 +177,6 @@ public class Channel {
         }
         //add the transaction to the transactions list
         transactions.add(transaction);
-        logger.info("Transaction " + transaction.getId() + " has been created");
         transaction.setTransactionResult(TransactionResult.SUCCESS);
         return transaction;
     }
@@ -191,10 +190,11 @@ public class Channel {
      * @throws InsufficientAmountOfMoneyException Exception if customer does not have enough money for the purchase
      */
 
-    private PaymentDetails processPayment(Party seller, Party customer) throws InsufficientAmountOfMoneyException {
-        Double price = seller.getOperation().getPrice();
-        Account sellerAccount = seller.getAccount();
-        Account customerAccount = customer.getAccount();
+
+    private PaymentDetails processPayment(Party seller, Party customer, Product product) throws InsufficientAmountOfMoneyException {
+        Double price = seller.getOperation().getPrice() + product.getPrice();
+        Account sellerAccount =  seller.getAccount();
+        Account customerAccount =  customer.getAccount();
 
         //check if customer has enough money
         if (customerAccount.getTotalAmount() < price) {

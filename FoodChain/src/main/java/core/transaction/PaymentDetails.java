@@ -15,7 +15,7 @@ public class PaymentDetails {
 
     private final Double amount;
 
-    private String hash;
+    private final String hash;
 
     public PaymentDetails(Long paymentId, UserKey sellerId, UserKey customerID, Double amount) {
         this.paymentId = paymentId;
@@ -36,7 +36,7 @@ public class PaymentDetails {
                 + sellerId.getPublicKey()
                 + customerID.getPublicKey()
                 + Double.toString(amount);
-        MessageDigest digest = null;
+        MessageDigest digest;
         byte[] bytes = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");

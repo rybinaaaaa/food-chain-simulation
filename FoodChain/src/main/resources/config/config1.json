@@ -1,0 +1,189 @@
+{
+  "product": [
+    {"name": "Norwegian carrot",
+    "weight":  200.000,
+    "price":  15000.000,
+    "amount":  20000,
+    "unit":  "KG"}
+  ],
+  "parties": [
+    {
+      "name": "Dan",
+      "surname": "Samon",
+      "type": "FARMER",
+      "isRetroactiveChange": "FALSE"
+    },
+    {
+      "name": "Manuele",
+      "surname": "Thaleman",
+      "type": "PROCESSOR",
+      "isRetroactiveChange": "FALSE"
+    },
+    {
+      "name": "John",
+      "surname": "Holland",
+      "type": "WAREHOUSE",
+      "isRetroactiveChange": "FALSE"
+    },
+    {
+      "name": "Rachel",
+      "surname": "Johnson",
+      "type": "RETAILER",
+      "isRetroactiveChange": "FALSE"
+    },
+    {
+      "name": "Monica",
+      "surname": "Roberts",
+      "type": "CUSTOMER",
+      "isRetroactiveChange": "FALSE"
+    },
+    {
+      "name": "Tom",
+      "surname": "Swan",
+      "type": "DELIVER",
+      "isRetroactiveChange": "FALSE"
+    }
+    ],
+
+    "channels": [
+      {"type": "VEGETABLES"},
+      {"type": "EXCHANGE"}
+    ],
+
+    "operations": [
+      {"type": "Growing",
+        "price":  75000.000,
+        "name":  "Grow carrots",
+        "channelType":  "VEGETABLES",
+        "duration":  15.0,
+        "temperature":  15.000},
+      {"type": "Processing",
+        "price":  50000.000,
+        "name":  "Process carrots",
+        "channelType":  "VEGETABLES",
+        "duration":  1.5,
+        "temperature":  15.000},
+      {"type": "Storing",
+        "price":  10000.000,
+        "name":  "Store carrots",
+        "channelType":  "VEGETABLES",
+        "duration":  7,
+        "temperature":  4.00,
+        "humidity": 96.000
+      },
+      {"type": "Delivering",
+        "price":  20000.000,
+        "name":  "Deliver carrots",
+        "channelType":  "EXCHANGE",
+        "duration":  2
+      },
+      {"type": "Selling",
+        "price":  10000.000,
+        "name":  "Sell carrots",
+        "channelType":  "EXCHANGE",
+        "duration":  5
+      }
+    ],
+
+  "partyOperationsAndChannels": [
+    {
+      "name": "Dan",
+      "surname": "Samon",
+      "operation": "Grow carrots",
+      "channel": "VEGETABLES"
+    },
+    {
+      "name": "Manuele",
+      "surname": "Thaleman",
+      "operation": "Process carrots",
+      "channel": "VEGETABLES"
+
+    },
+    {
+      "name": "John",
+      "surname": "Holland",
+      "operation": "Store carrots",
+      "channel": "VEGETABLES"
+
+    },
+    {
+      "name": "Rachel",
+      "surname": "Johnson",
+      "operation": "Sell carrots",
+      "channel": "EXCHANGE"
+
+    },
+    {
+      "name": "Tom",
+      "surname": "Swan",
+      "operation": "Deliver carrots",
+      "channel": "EXCHANGE"
+    }
+  ],
+
+  "channelSubscribers": [
+    {
+      "name": "Manuele",
+      "surname": "Thaleman",
+      "operation": "Grow carrots",
+      "channelType": "VEGETABLES"
+    },
+    {
+      "name": "John",
+      "surname": "Holland",
+      "operation": "Process carrots",
+      "channelType": "VEGETABLES"
+    },
+    {
+      "name": "Rachel",
+      "surname": "Johnson",
+      "operation": "Deliver carrots",
+      "channelType": "EXCHANGE"
+
+    },
+    {
+      "name": "Tom",
+      "surname": "Swan",
+      "operation": "Store carrots",
+      "channelType": "VEGETABLES"
+    },
+    {
+      "name": "Monica",
+      "surname": "Roberts",
+      "operation": "Sell carrots",
+      "channelType": "EXCHANGE"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Dan",
+      "surname": "Samon",
+      "idCert": 11111,
+      "code": "FH27G"
+    },
+    {
+      "name": "Manuele",
+      "surname": "Thaleman",
+      "idCert": 22222,
+      "code": "GW682"
+    },
+    {
+      "name": "John",
+      "surname": "Holland",
+      "idCert": 33333,
+      "code": "LJ965"
+    },
+    {
+      "name": "Rachel",
+      "surname": "Johnson",
+      "idCert": 44444,
+      "code": "SG216"
+    },
+    {
+      "name": "Tom",
+      "surname": "Swan",
+      "idCert": 66666,
+      "code": "EJ887"
+    }
+  ]
+}

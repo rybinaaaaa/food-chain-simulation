@@ -3,7 +3,6 @@ package core.party;
 import core.certificate.Certificate;
 import core.product.Product;
 import core.product.state.Received;
-import core.product.state.State;
 import core.operation.Operation;
 import core.transaction.Account;
 import core.channel.Channel;
@@ -77,13 +76,6 @@ public abstract class Party {
      */
 
     public Boolean update(Operation o, Product p, Channel c) {
-//        try {
-//            Certificate certificate = this.getCertificateByProductAndOperation(p, o);
-//            certificate.setActive(false);
-//        } catch (CertificateNotFoundException e) {
-//            logger.warn("Party " + getFullName() + " has no certificate to join channel with productId  " + p.getId() + " with operation " + o.getClass().getName());
-//            return false;
-//        }
         return true;
     }
 

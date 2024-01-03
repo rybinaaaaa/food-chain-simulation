@@ -1,6 +1,5 @@
 package core.product;
 
-import core.certificate.Certificate;
 import core.product.state.State;
 import core.transaction.Transaction;
 import patterns.prototype.Prototype;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product implements Prototype<Product> {
-    private Long id;
+    protected Long id;
 
     protected Double weight;
 
@@ -29,10 +28,11 @@ public class Product implements Prototype<Product> {
 
     @Override
     public Prototype<Product> clone() {
-        return new Product(weight, name, price, amount, unit);
+        return new Product(id, weight, name, price, amount, unit);
     }
 
-    public Product(Double weight, String name, Double price, int amount, AmountUnit unit) {
+    public Product(Long id, Double weight, String name, Double price, int amount, AmountUnit unit) {
+        this.id = id;
         this.weight = weight;
         this.name = name;
         this.price = price;

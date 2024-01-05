@@ -56,6 +56,7 @@ Kishkinova Olha, Rybina Alina
   Subscription on channels/operations is implemented using Observer pattern, where channels act as publishers and
   parties as subscribers.
 - **F10** <br/>
+  All reports are generated into XML files.
 
 ## Design patterns
 
@@ -64,6 +65,8 @@ Kishkinova Olha, Rybina Alina
 - **State machine** <br/>
   Transition of product states.
 - **Factory method** <br/>
+- Creating party according to chosen type.
 - **Prototype** <br/>
 - Creating more products, similar to existing ones.
 - **Proxy** <br/>
+- Building reports on after need.

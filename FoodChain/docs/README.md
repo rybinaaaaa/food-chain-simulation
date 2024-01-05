@@ -4,13 +4,6 @@ Kishkinova Olha, Rybina Alina
 
 ## Description
 
-## UML class diagram
-
-![Use case diagram](/docs/..)
-
-## Use case diagram
-
-![Use case diagram](/docs/..)
 
 ## Functional requirements
 

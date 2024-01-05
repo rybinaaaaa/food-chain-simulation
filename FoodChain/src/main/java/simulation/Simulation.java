@@ -35,12 +35,15 @@ public class Simulation {
         configLoader.load(path1);
         this.parties = configLoader.getParties();
         this.carrot = configLoader.getProduct();
+        Carrot ecoCarrot = (Carrot) carrot.clone();
+
 
         parties.get(0).processProduct(carrot);
         ReportProxy reportProxy = new ReportProxy(carrot, ReportType.PARTIES);
         reportProxy.downloadReport();
         FoodChainReport report1 = new FoodChainReport(carrot);
         report1.downloadReport();
+        //other reports...
 
     }
 

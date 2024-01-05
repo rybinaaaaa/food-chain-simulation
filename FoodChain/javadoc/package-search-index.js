@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"core.certificate"},{"l":"core.channel"},{"l":"core.operation"},{"l":"core.party"},{"l":"core.product"},{"l":"core.product.state"},{"l":"core.report"},{"l":"core.transaction"},{"l":"exception"},{"l":"patterns.prototype"},{"l":"simulation"}];updateSearchResults();

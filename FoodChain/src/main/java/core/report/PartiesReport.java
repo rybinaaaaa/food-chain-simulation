@@ -12,8 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.List;
 
 public class PartiesReport extends Report {
-    private Double margin;
-
     public PartiesReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         super(product);
         this.fileName = "partiesReport" + this.id.toString();
@@ -23,6 +21,7 @@ public class PartiesReport extends Report {
     protected Document buildReport(Product product) throws ParserConfigurationException {
         List<Transaction> transactions = product.getHistory();
         Double price = product.getPrice();
+        Double margin = 0.0;
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document newDoc = builder.newDocument();
@@ -34,6 +33,7 @@ public class PartiesReport extends Report {
             if (t.getTransactionResult() != TransactionResult.SUCCESS) {
                 continue;
             }
+            margin += t.getOperation().getPrice();
             Element detailElement = newDoc.createElement("reportDetail");
             rootElement.appendChild(detailElement);
 
@@ -43,6 +43,9 @@ public class PartiesReport extends Report {
             detailElement.setAttribute("OperationType", t.getOperation().getName());
             detailElement.setAttribute("Duration", Float.toString(t.getOperation().getDuration()));
         }
+
+        Element marginElement = newDoc.createElement("Margin");
+        marginElement.setAttribute("margin", String.valueOf(margin - price));
 
         return newDoc;
     }

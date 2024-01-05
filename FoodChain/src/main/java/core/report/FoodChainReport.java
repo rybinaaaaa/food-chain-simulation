@@ -23,8 +23,6 @@ public class FoodChainReport extends Report {
     @Override
     protected Document buildReport(Product product) throws ParserConfigurationException, IllegalAccessException {
         List<Transaction> transactions = product.getHistory();
-        Double price = product.getPrice();
-//        TODO: create margin results
 
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document newDoc = builder.newDocument();

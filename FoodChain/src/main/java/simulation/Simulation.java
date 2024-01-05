@@ -37,10 +37,10 @@ public class Simulation {
         this.carrot = configLoader.getProduct();
 
         parties.get(0).processProduct(carrot);
-//        ReportProxy reportProxy = new ReportProxy(carrot, ReportType.PARTIES);
-//        reportProxy.downloadReport();
-//        FoodChainReport report1 = new FoodChainReport();
-//        report1.buildReport(carrot);
+        ReportProxy reportProxy = new ReportProxy(carrot, ReportType.PARTIES);
+        reportProxy.downloadReport();
+        FoodChainReport report1 = new FoodChainReport(carrot);
+        report1.downloadReport();
 
     }
 

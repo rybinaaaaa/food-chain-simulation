@@ -31,7 +31,7 @@ public class ConfigLoader {
     private Carrot carrot;
 
     /**
-     * Loads project configuration from a json file
+     * Loads project configuration from a json file.
      * @param path path to the configuration file
      */
     public void load(String path) {

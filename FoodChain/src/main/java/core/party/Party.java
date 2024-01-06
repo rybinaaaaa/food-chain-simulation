@@ -42,7 +42,7 @@ public abstract class Party {
     }
 
     /**
-     * Conduct an operation on a product by changing its states
+     * Conduct an operation on a product by changing its states.
      * @param product Particular product
      */
 
@@ -53,7 +53,7 @@ public abstract class Party {
     }
 
     /**
-     * Notifies channels about the product
+     * Notifies channels about the product.
      */
 
     public void publishEvent() {
@@ -68,7 +68,7 @@ public abstract class Party {
     }
 
     /**
-     * Receives a notification from a channel
+     * Receives a notification from a channel.
      * @param o Operation conducted on a product
      * @param p Particular product
      * @param c Channel which sent the notification
@@ -132,7 +132,7 @@ public abstract class Party {
     }
 
     /**
-     * Finds a certificate of the party
+     * Finds a certificate of the party.
      * @param product Particular product
      * @param operation Operation which party performs on the product
      * @return Found certificate or null

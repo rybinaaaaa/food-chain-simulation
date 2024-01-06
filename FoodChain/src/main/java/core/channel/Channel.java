@@ -36,7 +36,7 @@ public class Channel {
 
 
     /**
-     * Adds a new subscriber to the subscribers list
+     * Adds a new subscriber to the subscribers list.
      *
      * @param party     Party - subscriber
      * @param operation Operation to subscribe on
@@ -55,7 +55,7 @@ public class Channel {
 
 
     /**
-     * Removes a subscriber from the subscribers list
+     * Removes a subscriber from the subscribers list.
      *
      * @param party     Party - subscriber
      * @param operation Operation to unsubscribe from
@@ -75,7 +75,7 @@ public class Channel {
     }
 
     /**
-     * Notifies subscribers about the product and finds a customer for this product
+     * Notifies subscribers about the product and finds a customer for this product.
      *
      * @param operation Operation conducted on a product
      * @param product   Particular product
@@ -93,7 +93,7 @@ public class Channel {
 
     /**
      * Performs transition of a product between two parties, creates payment and transaction, checks validity of a certificate,
-     * passes processing of a product to another party
+     * passes processing of a product to another party.
      *
      * @param operation Operation conducted on a product by seller
      * @param product   Particular product
@@ -150,7 +150,7 @@ public class Channel {
     }
 
     /**
-     * Creates transaction
+     * Creates transaction.
      *
      * @param seller         Party which sells a product
      * @param operation      Operation conducted on a product
@@ -182,7 +182,7 @@ public class Channel {
     }
 
     /**
-     * Processes payment and creates PaymentDetails
+     * Processes payment and creates PaymentDetails.
      *
      * @param seller   Party which sells a product
      * @param customer Party which buys a product

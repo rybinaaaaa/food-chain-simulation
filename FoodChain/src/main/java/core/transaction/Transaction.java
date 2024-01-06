@@ -33,7 +33,7 @@ public class Transaction {
     }
 
     /**
-     * Checks if current transaction is valid by comparing hash
+     * Checks if current transaction is valid by comparing hash.
      * @return true if valid, false if invalid
      */
 
@@ -42,7 +42,7 @@ public class Transaction {
     }
 
     /**
-     * Creates hash for current transaction
+     * Creates hash for current transaction.
      * @return Created hash
      */
 

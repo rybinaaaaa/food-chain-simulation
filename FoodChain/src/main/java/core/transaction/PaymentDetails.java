@@ -1,6 +1,9 @@
 package core.transaction;
 
 import core.party.UserKey;
+import core.report.Report;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,6 +20,9 @@ public class PaymentDetails {
 
     private final String hash;
 
+    private static final Logger logger = LogManager.getLogger(Report.class);
+
+
     public PaymentDetails(Long paymentId, UserKey sellerId, UserKey customerID, Double amount) {
         this.paymentId = paymentId;
         this.sellerId = sellerId;
@@ -26,7 +32,7 @@ public class PaymentDetails {
     }
 
     /**
-     * Creates hash for current payment
+     * Creates hash for current payment.
      * @return created hash
      */
 
@@ -42,7 +48,7 @@ public class PaymentDetails {
             digest = MessageDigest.getInstance("SHA-256");
             bytes = digest.digest(dataToHash.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
-            //log the error
+            logger.error("No algorithm for hashing!");
         }
         StringBuilder buffer = new StringBuilder();
         for (byte b : bytes) {

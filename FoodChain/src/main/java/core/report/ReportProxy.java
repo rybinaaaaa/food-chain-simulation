@@ -2,6 +2,7 @@ package core.report;
 
 import core.product.Product;
 import org.w3c.dom.Document;
+import simulation.Simulation;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -10,8 +11,8 @@ public class ReportProxy extends Report {
     private Product product;
     private ReportType reportType;
 
-    public ReportProxy(Product product, ReportType reportType) {
-        this.product = product;
+    public ReportProxy(Simulation simulation, ReportType reportType) {
+        this.product = simulation.getProduct();
         this.reportType = reportType;
     }
 

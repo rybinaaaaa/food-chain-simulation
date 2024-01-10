@@ -4,6 +4,7 @@ import core.product.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
+import simulation.Simulation;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -23,6 +24,11 @@ public abstract class Report {
     protected Document document;
 
     protected String fileName;
+
+    public Report(Simulation simulation) throws ParserConfigurationException, IllegalAccessException {
+        this.id = counter.getAndIncrement();
+        this.document = buildReport(simulation.getProduct());
+    }
 
     public Report(Product product) throws ParserConfigurationException, IllegalAccessException {
         this.id = counter.getAndIncrement();

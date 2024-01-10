@@ -3,6 +3,7 @@ package simulation;
 
 import core.party.Party;
 import core.product.Carrot;
+import core.product.Product;
 import core.report.FoodChainReport;
 import core.report.ReportProxy;
 import core.report.ReportType;
@@ -25,27 +26,26 @@ public class Simulation {
     String path3 = "/config/config3.json";
 
 
-
     private List<Party> parties;
 
-    private Carrot carrot;
+    private Product product;
 
+    public Product getProduct() {
+        return product;
+    }
 
     public void start() throws ParserConfigurationException, IllegalAccessException {
         configLoader.load(path1);
         this.parties = configLoader.getParties();
-        this.carrot = configLoader.getProduct();
-        Carrot ecoCarrot = (Carrot) carrot.clone();
+        this.product = configLoader.getProduct();
+        Carrot ecoCarrot = (Carrot) product.clone();
 
 
-        parties.get(0).processProduct(carrot);
-        ReportProxy reportProxy = new ReportProxy(carrot, ReportType.PARTIES);
+        parties.get(0).processProduct(product);
+        ReportProxy reportProxy = new ReportProxy(this, ReportType.PARTIES);
         reportProxy.downloadReport();
-        FoodChainReport report1 = new FoodChainReport(carrot);
+        FoodChainReport report1 = new FoodChainReport(product);
         report1.downloadReport();
         //other reports...
-
     }
-
-
 }

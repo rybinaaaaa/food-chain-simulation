@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2024-01-05">
-<meta name="description" content="declaration: package: core.channel, class: Channel">
+<meta name="description" content="declaration: package: Core.Channel, class: Channel">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../script-dir/jquery-ui.min.css" title="Style">
@@ -82,11 +82,11 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">core.channel</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">Core.Channel</a></div>
 <h1 title="Class Channel" class="title">Class Channel</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">core.channel.Channel</div>
+<div class="inheritance">Core.Channel.Channel</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
@@ -103,7 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(core.channel.ChannelType)" class="member-name-link">Channel</a><wbr>(<a href="ChannelType.html" title="enum class in core.channel">ChannelType</a>&nbsp;type)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(core.channel.ChannelType)" class="member-name-link">Channel</a><wbr>(<a href="ChannelType.html" title="enum class in Core.Channel">ChannelType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -119,26 +119,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ChannelType.html" title="enum class in core.channel">ChannelType</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ChannelType.html" title="enum class in Core.Channel">ChannelType</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#publishPartyEvent(core.operation.Operation,core.product.Product,core.party.Party)" class="member-name-link">publishPartyEvent</a><wbr>(<a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation,
- <a href="../product/Product.html" title="class in core.product">Product</a>&nbsp;product,
- <a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;seller)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#publishPartyEvent(core.operation.Operation,core.product.Product,core.party.Party)" class="member-name-link">publishPartyEvent</a><wbr>(<a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation,
+ <a href="../product/Product.html" title="class in Core.Product">Product</a>&nbsp;product,
+ <a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;seller)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Performs transition of a product between two parties, creates payment and transaction, checks validity of a certificate,
  passes processing of a product to another party</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#subscribe(core.party.Party,core.operation.Operation)" class="member-name-link">subscribe</a><wbr>(<a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;party,
- <a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#subscribe(core.party.Party,core.operation.Operation)" class="member-name-link">subscribe</a><wbr>(<a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;party,
+ <a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a new subscriber to the subscribers list</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unsubscribe(core.party.Party,core.operation.Operation)" class="member-name-link">unsubscribe</a><wbr>(<a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;party,
- <a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unsubscribe(core.party.Party,core.operation.Operation)" class="member-name-link">unsubscribe</a><wbr>(<a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;party,
+ <a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Removes a subscriber from the subscribers list</div>
 </div>
@@ -162,7 +162,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(core.channel.ChannelType)">
 <h3>Channel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Channel</span><wbr><span class="parameters">(<a href="ChannelType.html" title="enum class in core.channel">ChannelType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Channel</span><wbr><span class="parameters">(<a href="ChannelType.html" title="enum class in Core.Channel">ChannelType</a>&nbsp;type)</span></div>
 </section>
 </li>
 </ul>
@@ -176,8 +176,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="subscribe(core.party.Party,core.operation.Operation)">
 <h3>subscribe</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">subscribe</span><wbr><span class="parameters">(<a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;party,
- <a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">subscribe</span><wbr><span class="parameters">(<a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;party,
+ <a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation)</span></div>
 <div class="block">Adds a new subscriber to the subscribers list</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -189,26 +189,26 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="unsubscribe(core.party.Party,core.operation.Operation)">
 <h3>unsubscribe</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unsubscribe</span><wbr><span class="parameters">(<a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;party,
- <a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation)</span>
-                 throws <span class="exceptions"><a href="../../exception/SubscriptionNotFoundException.html" title="class in exception">SubscriptionNotFoundException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unsubscribe</span><wbr><span class="parameters">(<a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;party,
+ <a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation)</span>
+                 throws <span class="exceptions"><a href="../../exception/SubscriptionNotFoundException.html" title="class in Exception">SubscriptionNotFoundException</a></span></div>
 <div class="block">Removes a subscriber from the subscribers list</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>party</code> - Party - subscriber</dd>
 <dd><code>operation</code> - Operation to unsubscribe from</dd>
 <dt>Throws:</dt>
-<dd><code><a href="../../exception/SubscriptionNotFoundException.html" title="class in exception">SubscriptionNotFoundException</a></code></dd>
+<dd><code><a href="../../exception/SubscriptionNotFoundException.html" title="class in Exception">SubscriptionNotFoundException</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="publishPartyEvent(core.operation.Operation,core.product.Product,core.party.Party)">
 <h3>publishPartyEvent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">publishPartyEvent</span><wbr><span class="parameters">(<a href="../operation/Operation.html" title="class in core.operation">Operation</a>&nbsp;operation,
- <a href="../product/Product.html" title="class in core.product">Product</a>&nbsp;product,
- <a href="../party/Party.html" title="class in core.party">Party</a>&nbsp;seller)</span>
-                       throws <span class="exceptions"><a href="../../exception/NoCustomerFoundException.html" title="class in exception">NoCustomerFoundException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">publishPartyEvent</span><wbr><span class="parameters">(<a href="../operation/Operation.html" title="class in Core.Operation">Operation</a>&nbsp;operation,
+ <a href="../product/Product.html" title="class in Core.Product">Product</a>&nbsp;product,
+ <a href="../party/Party.html" title="class in Core.Party">Party</a>&nbsp;seller)</span>
+                       throws <span class="exceptions"><a href="../../exception/NoCustomerFoundException.html" title="class in Exception">NoCustomerFoundException</a></span></div>
 <div class="block">Performs transition of a product between two parties, creates payment and transaction, checks validity of a certificate,
  passes processing of a product to another party</div>
 <dl class="notes">
@@ -217,14 +217,14 @@ loadScripts(document, 'script');</script>
 <dd><code>product</code> - Particular product</dd>
 <dd><code>seller</code> - Party which sells a product</dd>
 <dt>Throws:</dt>
-<dd><code><a href="../../exception/NoCustomerFoundException.html" title="class in exception">NoCustomerFoundException</a></code> - Exception if no customer was found for a product</dd>
+<dd><code><a href="../../exception/NoCustomerFoundException.html" title="class in Exception">NoCustomerFoundException</a></code> - Exception if no customer was found for a product</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getType()">
 <h3>getType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ChannelType.html" title="enum class in core.channel">ChannelType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ChannelType.html" title="enum class in Core.Channel">ChannelType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
 </section>
 </li>
 </ul>

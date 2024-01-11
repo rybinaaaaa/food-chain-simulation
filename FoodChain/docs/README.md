@@ -8,23 +8,23 @@ Kishkinova Olha, Rybina Alina
 ## Functional requirements
 
 - **F1** <br/>
-  Main entities are located in the "core/party" package(exception: Product is located in the "core/product" package).
+  Main entities are located in the "Core/party" package(Exception: Product is located in the "Core/product" package).
 - **F2** <br/>
   Transition of a product is happening in the *publishPartyEvent* function, by looking for a customer, creating a
   payment and transaction and passing the product to the next party. Payment for the provided operation and product is
   processed in the *processPayment* function.
   Transactions are created in the *createTransaction* function. Mentioned functions are located in the *Channel* class.
-  There are 5 operations with a number of parameters, located in the *core/operation* package.
+  There are 5 operations with a number of parameters, located in the *Core/operation* package.
 - **F3** <br/>
   Transaction stores information about the product, party and conducted payment, from what hash is generated.
-  Transaction class is located in the  *core/transaction* package. Transaction hash validity is checked by comparing
+  Transaction class is located in the  *Core/transaction* package. Transaction hash validity is checked by comparing
   generated hash to the stored one every time transaction is generated. List of conducted transactions is stored in a
   channel.
 - **F4** <br/>
   During the entire life cycle, the product retains a history of actions performed with it, which can be downloaded by
   downloading a report file.
 - **F5** <br/>
-  Channel is located in the *core/channel* package. Each party has list of channels to send information to.
+  Channel is located in the *Core/channel* package. Each party has list of channels to send information to.
   Each party can subscribe on channels to receive information from, which is implemented using a *hashMap* that stores
   operations and parties subscribed on them.
 - **F6** <br/>
@@ -39,7 +39,7 @@ Kishkinova Olha, Rybina Alina
   When *isValid* function is called, it detects the difference between generated and stored hash and warns about the
   change attempt.
 - **F8** <br/>
-  Transition of product states is implemented using State pattern, states are located in the *core/product/state*
+  Transition of product states is implemented using State pattern, states are located in the *Core/product/state*
   package.
   In the *processProduct* function of the Party class, party sets product state to *Received*, then it changes to
   *Processing* and *Ready* state,
@@ -51,7 +51,7 @@ Kishkinova Olha, Rybina Alina
 - **F10** <br/>
   All reports are generated into XML files.
 
-## Design patterns
+## Design Patterns
 
 - **Observer** <br/>
   Communication between parties and channels.

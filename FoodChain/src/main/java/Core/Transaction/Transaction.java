@@ -2,6 +2,9 @@ package Core.Transaction;
 
 import Core.Party.Party;
 import Core.Operation.Operation;
+import Core.Report.Report;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -21,6 +24,8 @@ public class Transaction {
     private final PaymentDetails paymentDetails;
 
     private TransactionResult transactionResult;
+    
+    private static final Logger logger = LogManager.getLogger(Report.class);
 
 
     public Transaction(Long id, Party party, Operation operation, PaymentDetails paymentDetails, Transaction previousTransaction) {
@@ -67,7 +72,7 @@ public class Transaction {
             digest = MessageDigest.getInstance("SHA-256");
             bytes = digest.digest(dataToHash.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
-            //log the error
+            logger.error("No algorithm for hashing!");
         }
         StringBuilder buffer = new StringBuilder();
         for (byte b : bytes) {
